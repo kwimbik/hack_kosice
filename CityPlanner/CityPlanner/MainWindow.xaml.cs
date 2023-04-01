@@ -151,12 +151,6 @@ namespace CityPlanner
 
         #endregion
 
-
-        private void run_btn_Click(object sender, RoutedEventArgs e)
-        {
-            //TODO BARA
-        }
-
         private void Stats_Click(object sender, RoutedEventArgs e)
         {
             string file = @"..\..\..\..\..\maps\map_1.csv";
@@ -229,5 +223,9 @@ namespace CityPlanner
             cMMap.Children.Add(image);
         }
 
+        private void Evo_Click(object sender, RoutedEventArgs e)
+        {
+
+        }
     }
 }
