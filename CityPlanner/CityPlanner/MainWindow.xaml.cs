@@ -33,22 +33,20 @@ namespace CityPlanner
 
         private void DrawManhattanMap()
         {
-            DrawManhattanBackground();
+            DrawManhattanBackground(100, 100);
         }
 
-        private void DrawManhattanBackground()
+        private void DrawManhattanBackground(int width, int height)
         {
             Image image = new();
             DrawingImage drawingImage = new();
             DrawingGroup drawingGroup = new();
 
-            const int width = 100;
-            const int height = 100;
             const int demoUnitWidth = 5;
             const int demoUnitHeight = 5;
 
-            const int xMax = width * demoUnitWidth;
-            const int yMax = width * demoUnitWidth;
+            int xMax = width * demoUnitWidth;
+            int yMax = width * demoUnitWidth;
 
             for (int i = 0; i < width; i++)
             {
@@ -105,9 +103,18 @@ namespace CityPlanner
 
         #endregion
 
+        #region Form
+
         private void Window_Loaded(object sender, RoutedEventArgs e)
         {
             DrawManhattanMap();
         }
+
+        private void ImportMap_Click(object sender, RoutedEventArgs e)
+        {
+
+        }
+
+        #endregion
     }
 }

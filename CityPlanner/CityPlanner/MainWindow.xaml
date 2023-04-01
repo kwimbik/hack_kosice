@@ -10,6 +10,13 @@
         <TabControl>
             <TabItem Header="City map">
                 <Grid>
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="Auto"/>
+                        <RowDefinition/>
+                    </Grid.RowDefinitions>
+                    <ToolBar>
+                        <Button Content="Import map" Click="ImportMap_Click"/>
+                    </ToolBar>
                     <Canvas x:Name="cMMap">
 
                     </Canvas>
