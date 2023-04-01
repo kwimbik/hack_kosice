@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Printing;
 using System.Reflection.Metadata.Ecma335;
+using System.Security.Cryptography.X509Certificates;
 using System.Text;
 using System.Threading.Tasks;
 using CityPlanner.Models;
@@ -27,16 +28,28 @@ namespace CityPlanner
 
         }
 
-        private void AddVariables()
+        private void makeLP()
         {
             Variable x = solver.MakeNumVar(0.0, map.Width, "x");
             Variable y = solver.MakeNumVar(0.0, map.Height, "y");
 
+            solver.Maximize(Functions.utility(areas, new ServiceLocation {X = x, Y = y});
+        }
+
+        private void AddVariables()
+        {
+            Variable x = solver.MakeNumVar(0.0, map.Width, "x");
+            Variable y = solver.MakeNumVar(0.0, map.Height, "y");
         }
 
         private void AddConstraints() // could depend on service type
         {
             //omezení mapy
+        }
+
+        private void AddObjectiveFunction() 
+        {
+            
         }
 
        
