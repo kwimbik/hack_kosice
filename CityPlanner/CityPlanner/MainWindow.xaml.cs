@@ -138,6 +138,7 @@ namespace CityPlanner
         {
 
         }
+
         private void cMMap_MouseMove(object sender, MouseEventArgs e)
         {
             Point position = e.GetPosition(cMMap);
