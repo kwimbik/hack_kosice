@@ -9,6 +9,8 @@ namespace CityPlanner.Models
     public class ServiceDefinition
     {
         public string Name { get; set; }
+
+        public string Type { get; set; }
         public int PopulationCapacity { get; set; }
 
         public override string ToString()
