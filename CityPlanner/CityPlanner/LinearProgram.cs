@@ -15,10 +15,10 @@ namespace CityPlanner
 
         private Solver solver;
         private List<DemographicUnit> areas;
-        private Service service;
+        private ServiceLocation service;
         private Map map;
 
-        public LinearProgram(List<DemographicUnit> areas, Service service, Map map) 
+        public LinearProgram(List<DemographicUnit> areas, ServiceLocation service, Map map) 
         {
             solver = Solver.CreateSolver("GLOP");
             this.areas = areas;  
@@ -29,8 +29,8 @@ namespace CityPlanner
 
         private void AddVariables()
         {
-            Variable x = solver.MakeNumVar(0.0, map.Matrix.Length, "x");
-            Variable y = solver.MakeNumVar(0.0, map.Matrix.Length "y");
+            Variable x = solver.MakeNumVar(0.0, map.Matrix.Width, "x");
+            Variable y = solver.MakeNumVar(0.0, map.Matrix.Height, "y");
 
         }
 
