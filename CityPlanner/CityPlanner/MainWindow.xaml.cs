@@ -27,8 +27,6 @@ namespace CityPlanner
         public MainWindow()
         {
             InitializeComponent();
-            grid.ColumnDefinitions.Add(new ColumnDefinition());
-            grid.ColumnDefinitions.Add(new ColumnDefinition());
         }
 
         #endregion
