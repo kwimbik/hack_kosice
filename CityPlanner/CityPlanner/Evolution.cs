@@ -10,19 +10,20 @@ namespace CityPlanner
     {
         public delegate void GenerationEventHandler(int generation, Individual[] population, double[] fitnesses);
 
-        const int POP_SIZE = 10;
-        const int GENS = 1000;
-        const int IND_SIZE = 16;
-        const int MAP_WIDTH = 100;
-        const int MAP_HEIGHT = 100;
         private Random _rand = new();
 
         public event GenerationEventHandler GenerationEvent;
 
-        public void Run()
+        private int _mapWidth;
+        private int _mapHeight;
+
+        public void Run(int mapWidth, int mapHeight, int popSize, int indSize, int generations)
         {
-            Individual[] population = InitPopulation(POP_SIZE, IND_SIZE);
-            for (int g = 0; g < GENS; g++)
+            _mapHeight = mapHeight;
+            _mapWidth = mapWidth;
+
+            Individual[] population = InitPopulation(popSize, indSize);
+            for (int g = 0; g < generations; g++)
             {
                 double[] fitnesses = population.Select(i => Fitness(i)).ToArray();
 
@@ -47,9 +48,9 @@ namespace CityPlanner
         private double Fitness(Individual individual)
         {
             double invFitness = 0;
-            for (int x = 0; x < MAP_WIDTH; x++)
+            for (int x = 0; x < _mapWidth; x++)
             {
-                for (int y = 0; y < MAP_HEIGHT; y++)
+                for (int y = 0; y < _mapHeight; y++)
                 {
                     double minDist = double.MaxValue;
                     for (int i = 0; i < individual.Services.Length; i++)
@@ -72,7 +73,7 @@ namespace CityPlanner
                 ind.Services = new Cords[indSize];
                 for (int j = 0; j < indSize; j++)
                 {
-                    ind.Services[j] = new Cords() { X = _rand.Next(MAP_WIDTH), Y = _rand.Next(MAP_HEIGHT) };
+                    ind.Services[j] = new Cords() { X = _rand.Next(_mapWidth), Y = _rand.Next(_mapHeight) };
                 }
                 population[i] = ind;
 
