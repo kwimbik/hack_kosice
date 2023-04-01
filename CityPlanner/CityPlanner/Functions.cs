@@ -21,13 +21,18 @@ namespace CityPlanner
             return Math.Abs(p1.X - p2.X) + Math.Abs(p1.Y - p2.Y);
         }
 
-        public static int getLocationStatus(DemographicUnit o, ServiceLocation t)
+        public static int getLocationStatus(DemographicUnit o, List<ServiceLocation> services)
         {
-            if (Functions.utility(o, t) > -1) return 0; //green, tohle je dobry
-            else if (Functions.utility(o, t) > -5) return 1; //tohle oranzovy
+            float minDist = int.MaxValue;
+            foreach (ServiceLocation s in services)
+            {
+                float distance = dist(o, s);
+                if (distance < minDist) minDist = distance;
+             }
+
+            if (minDist > -1) return 0; //green, tohle je dobry
+            else if (minDist > -5) return 1; //tohle oranzovy
             else return 2; //tohle je red, spatny
         }
-
-
     }
 }
