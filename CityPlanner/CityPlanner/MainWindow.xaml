@@ -25,7 +25,7 @@
                         <Button Content="Import map" Click="ImportMap_Click"/>
                     </ToolBar>
                     <StackPanel Grid.Column="0" Grid.Row="1">
-                        <ListView x:Name="lvServices"/>
+                        <ListBox x:Name="lbServices"/>
                     </StackPanel>
                     <Canvas x:Name="cMMap" Grid.Column="1" Grid.Row="1"/>
                 </Grid>

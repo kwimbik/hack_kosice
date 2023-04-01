@@ -116,7 +116,7 @@ namespace CityPlanner
         private void Window_Loaded(object sender, RoutedEventArgs e)
         {
             dgServices.ItemsSource = Model.ServiceDefinitions;
-            lvServices.ItemsSource = Model.ServiceDefinitions;
+            lbServices.ItemsSource = Model.ServiceDefinitions;
             
 
             string file = @"..\..\..\..\..\maps\map_1.csv";
