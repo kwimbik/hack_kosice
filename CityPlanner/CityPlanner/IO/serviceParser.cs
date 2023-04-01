@@ -20,7 +20,7 @@ namespace CityPlanner.IO
             "chemist", "parcel_locker", "MHD", "fitness", "bar", "pub", "fast_food,", "MS", "fitness", "pharmacy",
             "convenience", "cafe", "VÅ¡eobecnÃ¡ ambulancia pre dospelÃ½ch",
             };
-            string file = @"..\..\..\..\..\maps\POIs_location_catchments.csv";
+            string file = @"..\..\..\..\..\Datasets\POIs_location_catchments.csv";
             float minX = int.MaxValue;
             float maxX = int.MinValue;
             float minY = int.MaxValue;

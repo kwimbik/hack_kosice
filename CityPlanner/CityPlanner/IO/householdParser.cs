@@ -13,7 +13,12 @@ namespace CityPlanner.IO
 
         public static Map parseHouseholds(Map map)
         {
-            string file = @"..\..\..\..\..\maps\adresne_body_byty_KE.csv";
+            string file = @"..\..\..\..\..\Datasets\adresne_body_byty_KE.csv";
+
+            float minX = int.MaxValue;
+            float maxX = int.MinValue;
+            float minY = int.MaxValue;
+            float maxY = int.MinValue;
 
             using (StreamReader sr = new StreamReader(file))
             {
@@ -24,9 +29,43 @@ namespace CityPlanner.IO
                 {
                     line = currentLine.Split(',');
 
-                    map.Matrix[Convert.ToInt32(line[3]), Convert.ToInt32(line[4])].Population = Convert.ToInt32(line[12]);
+                    //map.Matrix[Convert.ToInt32(line[3]), Convert.ToInt32(line[4])].Population = Convert.ToInt32(line[12]);
+
+                    if (float.Parse(line[3]) < minX) minX = float.Parse(line[4]);
+                    if (float.Parse(line[3]) > maxX) maxX = float.Parse(line[4]);
+                    if (float.Parse(line[4]) < minY) minY = float.Parse(line[5]);
+                    if (float.Parse(line[4]) > maxY) maxY = float.Parse(line[5]);
                 }
+
+                sr.Close();
             }
+
+            map.Max_X = maxX; 
+            map.Max_Y = maxY;
+            map.Min_X = minX;
+            map.Min_Y = minY;
+
+            map.Unit_X = (maxX - minX) / map.Width;
+            map.Unit_Y = (maxY - minY) / map.Height;
+
+            using (StreamReader sr = new StreamReader(file))
+            {
+                string currentLine;
+                // currentLine will be null when the StreamReader reaches the end of file
+                string[] line = sr.ReadLine().Split(',');
+                while ((currentLine = sr.ReadLine()) != null)
+                {
+                    line = currentLine.Split(',');
+
+                    float x = (float.Parse(line[3]) - minX)/map.Unit_X;
+                    float y = (float.Parse(line[4]) - minY) / map.Unit_Y;
+
+                    map.Matrix[Convert.ToInt32(x), Convert.ToInt32(y)].Population = Convert.ToInt32(line[12]);
+                }
+
+                sr.Close();
+            }
+
 
             return map;
         }
