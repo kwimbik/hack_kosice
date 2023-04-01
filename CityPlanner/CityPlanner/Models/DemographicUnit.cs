@@ -10,7 +10,7 @@ namespace CityPlanner.Models
     {
         public int Population { get; set; }
         public double IncomeAvg { get; set; }
-        public int X { get; set; }
+        public int X { get; set; } // Useless, je to jenom index v tý Matrix té mapy...
         public int Y { get; set; }
     }
 }

@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 
 namespace CityPlanner.Models
 {
-    internal class Map
+    public class Map
     {
         public int Width { get => Matrix.GetLength(0); }
         public int Height { get => Matrix.GetLength(1); }
