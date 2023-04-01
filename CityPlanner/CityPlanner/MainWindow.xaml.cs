@@ -143,45 +143,22 @@ namespace CityPlanner
             const int demoUnitWidth = 5;
             const int demoUnitHeight = 5;
 
-            float[,] stats = Stats.getServiceStats(map, locations);
-            const float maxOkDistance = 60;
-
-            for (int i = 0; i < map.Width; i++)
-            {
-                for (int j = 0; j < map.Height; j++)
-                {
-                    double x = i * demoUnitWidth;
-                    double y = j * demoUnitHeight;
-
-                    // Draw demographic unit
-                    float stat = stats[i, j];
-                    Color color;
-                    if (stat > maxOkDistance)
-                    {
-                        color = Color.FromRgb(255, 0, 0);
-                    }
-                    else 
-                    {
-                        float normalizedDistance = stat / maxOkDistance;
-                        color = Color.FromRgb((byte)(normalizedDistance * 255),(byte)((1 - normalizedDistance) * 255), 0);
-                    }
-                    GeometryDrawing gd = new()
-                    {
-                        Geometry = new RectangleGeometry(new Rect() { X = x, Y = y, Width = demoUnitWidth, Height = demoUnitHeight }),
-                        Brush = new SolidColorBrush(color)
-                    };
-                    drawingGroup.Children.Add(gd);
-                }
-            }
-
-            drawingImage.Drawing = drawingGroup;
-            image.Source = drawingImage;
-            cMMap.Children.Add(image);
+            
         }
 
         private void Evo_Click(object sender, RoutedEventArgs e)
         {
-
+            Evolution evo = new();
+            evo.GenerationEvent += (g, population, fitnesses) =>
+            {
+                if (g % 10 == 0)
+                {
+                    int bestInPopIndex = Array.IndexOf(fitnesses, fitnesses.Max());
+                    Individual best = population[bestInPopIndex];
+                    
+                }
+            };
+            evo.Run();
         }
 
         #endregion

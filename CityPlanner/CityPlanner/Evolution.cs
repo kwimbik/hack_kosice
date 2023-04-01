@@ -8,12 +8,16 @@ namespace CityPlanner
 {
     internal class Evolution
     {
+        public delegate void GenerationEventHandler(int generation, Individual[] population, double[] fitnesses);
+
         const int POP_SIZE = 100;
         const int GENS = 100;
         const int IND_SIZE = 4;
         const int MAP_WIDTH = 100;
         const int MAP_HEIGHT = 100;
-        static Random rand = new();
+        private Random _rand = new();
+
+        public event GenerationEventHandler GenerationEvent;
 
         public void Run()
         {
@@ -25,6 +29,8 @@ namespace CityPlanner
                 //Console.WriteLine($"{g}> Fitness {fitnesses.Average()}");
                 //int maxIndex = Array.IndexOf(fitnesses, fitnesses.Max());
                 //Console.WriteLine($"{g}> Cords {string.Join(';', population[maxIndex].Services)}");
+
+                if (GenerationEvent is not null) GenerationEvent.Invoke(g, population, fitnesses);
 
                 Individual[] mating_pool = Selection(population, fitnesses);
                 Individual[] offspring = Mate(mating_pool, 0.7);
@@ -66,7 +72,7 @@ namespace CityPlanner
                 ind.Services = new Cords[indSize];
                 for (int j = 0; j < indSize; j++)
                 {
-                    ind.Services[j] = new Cords() { X = rand.Next(MAP_WIDTH), Y = rand.Next(MAP_HEIGHT) };
+                    ind.Services[j] = new Cords() { X = _rand.Next(MAP_WIDTH), Y = _rand.Next(MAP_HEIGHT) };
                 }
                 population[i] = ind;
 
@@ -80,9 +86,9 @@ namespace CityPlanner
             Individual[] newPopulation = new Individual[population.Length];
             for (int i = 0; i < population.Length; i++)
             {
-                int p1I = rand.Next(population.Length);
-                int p2I = rand.Next(population.Length);
-                if (fitnesses[p1I] > fitnesses[p2I] && rand.NextDouble() < 0.8)
+                int p1I = _rand.Next(population.Length);
+                int p2I = _rand.Next(population.Length);
+                if (fitnesses[p1I] > fitnesses[p2I] && _rand.NextDouble() < 0.8)
                 {
                     newPopulation[i] = population[p1I].Clone();
                 }
@@ -103,7 +109,7 @@ namespace CityPlanner
                 Individual p1 = population[i];
                 Individual p2 = population[i + 1];
 
-                int xoverIndex = rand.Next(p1.Services.Length);
+                int xoverIndex = _rand.Next(p1.Services.Length);
 
                 Individual o1 = p1.Clone();
                 Array.Copy(p1.Services, 0, o1.Services, 0, xoverIndex);
@@ -123,40 +129,40 @@ namespace CityPlanner
         {
             for (int i = 0; i < population.Length; i++)
             {
-                if (rand.NextDouble() < mutProbSmall)
+                if (_rand.NextDouble() < mutProbSmall)
                 {
-                    int index = rand.Next(population[i].Services.Length);
-                    double val = rand.NextDouble();
+                    int index = _rand.Next(population[i].Services.Length);
+                    double val = _rand.NextDouble();
                     if (val < 0.3)
                     {
-                        population[i].Services[index].X += rand.NextDouble() < 0.5 ? 1 : -1;
+                        population[i].Services[index].X += _rand.NextDouble() < 0.5 ? 1 : -1;
                     }
                     else if (val < 0.6)
                     {
-                        population[i].Services[index].Y += rand.NextDouble() < 0.5 ? 1 : -1;
+                        population[i].Services[index].Y += _rand.NextDouble() < 0.5 ? 1 : -1;
                     }
                     else
                     {
-                        population[i].Services[index].X += rand.NextDouble() < 0.5 ? 1 : -1;
-                        population[i].Services[index].Y += rand.NextDouble() < 0.5 ? 1 : -1;
+                        population[i].Services[index].X += _rand.NextDouble() < 0.5 ? 1 : -1;
+                        population[i].Services[index].Y += _rand.NextDouble() < 0.5 ? 1 : -1;
                     }
                 }
-                else if (rand.NextDouble() < mutProbLarge)
+                else if (_rand.NextDouble() < mutProbLarge)
                 {
-                    int index = rand.Next(population[i].Services.Length);
-                    double val = rand.NextDouble();
+                    int index = _rand.Next(population[i].Services.Length);
+                    double val = _rand.NextDouble();
                     if (val < 0.3)
                     {
-                        population[i].Services[index].X += rand.NextDouble() < 0.5 ? 5 : -5;
+                        population[i].Services[index].X += _rand.NextDouble() < 0.5 ? 5 : -5;
                     }
                     else if (val < 0.6)
                     {
-                        population[i].Services[index].Y += rand.NextDouble() < 0.5 ? 5 : -5;
+                        population[i].Services[index].Y += _rand.NextDouble() < 0.5 ? 5 : -5;
                     }
                     else
                     {
-                        population[i].Services[index].X += rand.NextDouble() < 0.5 ? 5 : -5;
-                        population[i].Services[index].Y += rand.NextDouble() < 0.5 ? 5 : -5;
+                        population[i].Services[index].X += _rand.NextDouble() < 0.5 ? 5 : -5;
+                        population[i].Services[index].Y += _rand.NextDouble() < 0.5 ? 5 : -5;
                     }
 
                 }
