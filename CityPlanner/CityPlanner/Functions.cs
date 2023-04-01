@@ -21,7 +21,7 @@ namespace CityPlanner
             return Math.Abs(p1.X - p2.X) + Math.Abs(p1.Y - p2.Y);
         }
 
-        public static int getLocationStatus(DemographicUnit o, List<ServiceLocation> services)
+        public static float getLocationStatus(DemographicUnit o, List<ServiceLocation> services)
         {
             //float minDist = int.MaxValue;
             //foreach (ServiceLocation s in services)
@@ -47,18 +47,7 @@ namespace CityPlanner
                 }
             }
 
-            if (minDistance < okTreshold)
-            {
-                return 0; // TODO: maybe change this to an enum instead of random numbers?
-            }
-            else if (minDistance < almostOkTreshold)
-            {
-                return 1;
-            }
-            else 
-            {
-                return 2;
-            }
+            return minDistance;
         }
     }
 }

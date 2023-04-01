@@ -150,9 +150,7 @@ namespace CityPlanner
 
         #endregion
 
-<<<<<<< Updated upstream
 
-=======
         private void run_btn_Click(object sender, RoutedEventArgs e)
         {
             //TODO BARA
@@ -166,17 +164,17 @@ namespace CityPlanner
 
             ServiceDefinition definition = new ServiceDefinition();
             ServiceLocation s1 = new ServiceLocation();
-            s1.X = 1;
-            s1.Y = 1;
+            s1.X = 50;
+            s1.Y = 10;
             ServiceLocation s2 = new ServiceLocation();
             s1.X = 1;
-            s1.Y = 131;
+            s1.Y = 13;
             ServiceLocation s3 = new ServiceLocation();
-            s1.X = 162;
-            s1.Y = 1;
+            s1.X = 74;
+            s1.Y = 51;
             ServiceLocation s4 = new ServiceLocation();
-            s1.X = 250;
-            s1.Y = 125;
+            s1.X = 25;
+            s1.Y = 12;
 
             List<ServiceLocation> locations = new List<ServiceLocation>() { s1, s2, s3, s4 };
 
@@ -190,6 +188,7 @@ namespace CityPlanner
             const int demoUnitHeight = 5;
 
             float[,] stats = Stats.getServiceStats(map, locations);
+            const float maxOkDistance = 50;
 
             for (int i = 0; i < map.Width; i++)
             {
@@ -201,17 +200,14 @@ namespace CityPlanner
                     // Draw demographic unit
                     float stat = stats[i, j];
                     Color color;
-                    switch (stat) 
+                    if (stat > maxOkDistance)
                     {
-                        case 0:
-                            color = Color.FromRgb(0, 255, 0);
-                            break;
-                        case 1:
-                            color = Color.FromRgb(255, 255, 0);
-                            break;
-                        default:
-                            color = Color.FromRgb(255, 0, 0);
-                            break;
+                        color = Color.FromRgb(255, 0, 0);
+                    }
+                    else 
+                    {
+                        float normalizedDistance = stat / maxOkDistance;
+                        color = Color.FromRgb((byte)(normalizedDistance * 255),(byte)((1 - normalizedDistance) * 255), 0);
                     }
                     GeometryDrawing gd = new()
                     {
@@ -226,6 +222,6 @@ namespace CityPlanner
             image.Source = drawingImage;
             cMMap.Children.Add(image);
         }
->>>>>>> Stashed changes
+
     }
 }
