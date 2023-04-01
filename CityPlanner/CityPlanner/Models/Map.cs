@@ -20,52 +20,12 @@ namespace CityPlanner.Models
         public float Unit_X { get; set; }
         public float Unit_Y { get; set; }
 
-        public List<ServiceLocation> services { get; set; }
-
-        
+        public List<ServiceLocation> Services { get; set; } = new();
         public DemographicUnit[,] Matrix { get; set; }
 
         public double Distance(ILocation l1, ILocation l2)
         {
             return Math.Abs(l1.X - l2.X) + Math.Abs(l1.Y - l2.Y);
-        }
-
-        public void LoadFromCsv(string filepath)
-        {
-            using(StreamReader sr = new(filepath))
-            {
-                List<DemographicUnit[]> cols = new();
-                int y = 0;
-                int width = 0;
-                int height = 0; 
-                while (!sr.EndOfStream) 
-                {
-                    string line = sr.ReadLine();
-                    string[] lineArr = line.Split(';');
-                    width = lineArr.Length;
-                    DemographicUnit[] row = new DemographicUnit[lineArr.Length];
-                    int x = 0;
-                    for (int i = 0; i < lineArr.Length; i++)
-                    {
-                        string[] demoUnitVals = lineArr[i].Split('/');
-                        row[i] = new DemographicUnit()
-                        {
-                            Y = y,
-                            X = x,
-                            IncomeAvg = double.Parse(demoUnitVals[0]),
-                            Population = int.Parse(demoUnitVals[1]),
-                        };
-                        x++;
-                    }
-                    cols.Add(row);
-                    height += 1;
-                    y++;
-                }
-                Matrix = new DemographicUnit[width, height];
-                for (int i = 0; i < width; i++)
-                    for (int j = 0; j < height; j++)
-                        Matrix[i, j] = cols[j][i];
-            }
         }
     }
 }

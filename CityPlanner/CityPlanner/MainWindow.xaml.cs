@@ -125,13 +125,6 @@ namespace CityPlanner
         {
             dgServices.ItemsSource = Model.ServiceDefinitions;
             lbServices.ItemsSource = Model.ServiceDefinitions;
-            
-
-            string file = @"..\..\..\..\..\maps\map_1.csv";
-            Map map = new();
-            map.LoadFromCsv(file);
-    
-            DrawMap(map);
         }
 
         private void ImportMap_Click(object sender, RoutedEventArgs e)
@@ -141,12 +134,12 @@ namespace CityPlanner
 
         private void cMMap_MouseMove(object sender, MouseEventArgs e)
         {
-            Point position = e.GetPosition(cMMap);
-            int x = (int)position.X;
-            int y = (int)position.Y;
+            //Point position = e.GetPosition(cMMap);
+            //int x = (int)position.X;
+            //int y = (int)position.Y;
 
-            var key = (x - x % 5, y - y % 5);
-            GeometryDrawing gd = _geometry[key];
+            //var key = (x - x % 5, y - y % 5);
+            //GeometryDrawing gd = _geometry[key];
             //gd.Brush = new SolidColorBrush(Colors.Beige);
         }
 
@@ -155,10 +148,9 @@ namespace CityPlanner
         private void Stats_Click(object sender, RoutedEventArgs e)
         {
             string file = @"..\..\..\..\..\maps\map_1.csv";
-            Map map = new();
-            map.LoadFromCsv(file);
-            map = HouseholdParser.parseHouseholds(map);
-            ServiceParser.parseServices(map);
+            Map map = new() { Matrix = new DemographicUnit[100, 100] };
+            HouseholdParser.parseHouseholds(map);
+            //ServiceParser.parseServices(map);
 
 
             //ServiceDefinition definition = new ServiceDefinition();
@@ -179,7 +171,7 @@ namespace CityPlanner
 
             // Vykradeno z Draw Map
 
-            List<ServiceLocation> locations = map.services.Where(s => s.Definition.Type == "MHD").ToList();
+            List<ServiceLocation> locations = map.Services.Where(s => s.Definition.Type == "MHD").ToList();
 
             Image image = new();
             DrawingImage drawingImage = new();

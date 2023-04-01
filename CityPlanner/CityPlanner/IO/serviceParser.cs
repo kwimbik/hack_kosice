@@ -46,7 +46,7 @@ namespace CityPlanner.IO
                     }
                 }
             }
-            map.services = services;
+            map.Services = services;
         }
     }
 }

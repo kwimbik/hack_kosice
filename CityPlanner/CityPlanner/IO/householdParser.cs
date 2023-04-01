@@ -12,7 +12,7 @@ namespace CityPlanner.IO
     internal class HouseholdParser
     {
 
-        public static Map parseHouseholds(Map map)
+        public static void parseHouseholds(Map map)
         {
             string file = @"..\..\..\..\..\Datasets\adresne_body_byty_KE.csv";
 
@@ -66,7 +66,6 @@ namespace CityPlanner.IO
 
                 sr.Close();
             }
-            return map;
         }
     }
 }

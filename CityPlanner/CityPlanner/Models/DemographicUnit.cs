@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace CityPlanner.Models
 {
-    public class DemographicUnit : ILocation
+    public struct DemographicUnit : ILocation
     {
         public int Population { get; set; }
         public double IncomeAvg { get; set; }
