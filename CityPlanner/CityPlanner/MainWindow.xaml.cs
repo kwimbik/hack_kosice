@@ -47,15 +47,18 @@ namespace CityPlanner
             const int demoUnitWidth = 5;
             const int demoUnitHeight = 5;
 
+            const int xMax = width * demoUnitWidth;
+            const int yMax = width * demoUnitWidth;
+
             for (int i = 0; i < width; i++)
             {
                 for (int j = 0; j < height; j++)
                 {
-                    int x = i * demoUnitWidth;
-                    int y = j * demoUnitHeight;
+                    double x = i * demoUnitWidth;
+                    double y = j * demoUnitHeight;
 
                     // Draw demographic unit
-                    Color color = Color.FromRgb((byte)(2 * x), (byte)(2 * y), 255);
+                    Color color = Color.FromRgb((byte)(255 * x / xMax), (byte)(255 * y / yMax), 255);
                     GeometryDrawing gd = new() 
                     { 
                         Geometry = new RectangleGeometry(new Rect() { X = x, Y = y, Width = demoUnitWidth, Height = demoUnitHeight }), 
