@@ -5,6 +5,7 @@ using System.Printing;
 using System.Reflection.Metadata.Ecma335;
 using System.Text;
 using System.Threading.Tasks;
+using CityPlanner.Models;
 using Google.OrTools.LinearSolver;
 
 namespace CityPlanner
@@ -12,25 +13,30 @@ namespace CityPlanner
     internal class LinearProgram
     {
 
-        private Solver Solver;
-        private List<Area> Areas;
-        private Service Service;
+        private Solver solver;
+        private List<DemographicUnit> areas;
+        private Service service;
+        private Map map;
 
-        public LinearProgram(List<Area> areas, Service service) 
+        public LinearProgram(List<DemographicUnit> areas, Service service, Map map) 
         {
-            Solver = Solver.CreateSolver("GLOP");
-            Areas = areas;  
-            Service = service;
+            solver = Solver.CreateSolver("GLOP");
+            this.areas = areas;  
+            this.service = service;
+            this.map = map;
+
         }
 
         private void AddVariables()
         {
+            Variable x = solver.MakeNumVar(0.0, map.Matrix.Length, "x");
+            Variable y = solver.MakeNumVar(0.0, map.Matrix.Length "y");
 
         }
 
         private void AddConstraints() // could depend on service type
         {
-
+            //omezení mapy
         }
 
        
