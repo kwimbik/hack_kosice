@@ -20,6 +20,8 @@ namespace CityPlanner.Models
         public float Unit_X { get; set; }
         public float Unit_Y { get; set; }
 
+        public List<ServiceLocation> services { get; set; }
+
         
         public DemographicUnit[,] Matrix { get; set; }
 

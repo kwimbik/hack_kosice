@@ -130,7 +130,8 @@ namespace CityPlanner
             string file = @"..\..\..\..\..\maps\map_1.csv";
             Map map = new();
             map.LoadFromCsv(file);
-            map = householdParser.parseHouseholds(map);
+            map = HouseholdParser.parseHouseholds(map);
+            ServiceParser.parseServices(map);
 
             DrawMap(map);
         }

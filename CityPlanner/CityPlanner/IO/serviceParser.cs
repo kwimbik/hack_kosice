@@ -10,10 +10,10 @@ using System.Windows.Navigation;
 
 namespace CityPlanner.IO
 {
-    public static class serviceParser
+    public static class ServiceParser
     {
 
-        public static List<ServiceLocation> parseServices()
+        public static void parseServices(Map map)
         {
             List<string> types = new List<string> { 
             "ambulancia zubnÃ©ho lekÃ¡rstva", "VÅ¡eobecnÃ¡ ambulancia pre deti", "PoÅ¡ty", "restaurant" , "playground", "Vybehy_psy",
@@ -21,13 +21,8 @@ namespace CityPlanner.IO
             "convenience", "cafe", "VÅ¡eobecnÃ¡ ambulancia pre dospelÃ½ch",
             };
             string file = @"..\..\..\..\..\Datasets\POIs_location_catchments.csv";
-            float minX = int.MaxValue;
-            float maxX = int.MinValue;
-            float minY = int.MaxValue;
-            float maxY = int.MinValue;
-
+          
             List<ServiceLocation> services = new List<ServiceLocation>();
-            Dictionary<ServiceLocation, float[]> serviceGPS = new Dictionary<ServiceLocation, float[]>();
 
             using (StreamReader sr = new StreamReader(file))
             {
@@ -38,30 +33,15 @@ namespace CityPlanner.IO
                     string[] line = currentLine.Split(',');
                     if (types.Contains(line[2]))
                     {
-                        if (float.Parse(line[4]) < minX) minX = float.Parse(line[4]);
-                        if (float.Parse(line[4]) > maxX) maxX = float.Parse(line[4]);
-                        if (float.Parse(line[5]) < minY) minY = float.Parse(line[5]);
-                        if (float.Parse(line[5]) > maxY) maxY = float.Parse(line[5]);
-
-
                         ServiceLocation service = new ServiceLocation();
                         service.Definition = new ServiceDefinition { Name = line[1], Type = line[2] };
-                        serviceGPS.Add(service, new float[] { float.Parse(line[4]), float.Parse(line[5]) });
+                        service.X = Convert.ToInt32(((float.Parse(line[4]) - map.Min_X) / map.Unit_X));
+                        service.Y = Convert.ToInt32(((float.Parse(line[5]) - map.Min_Y) / map.Unit_Y));
                         services.Add(service);
                     }
                 }
             }
-
-            float unitX = (maxX - minX) /  100; //map length
-            float unitY = (maxY - minY) / 100; //map length
-
-            foreach (var s in services)
-            {
-                s.X = Convert.ToInt32(((serviceGPS[s][0] - minX) / unitX));
-                s.Y = Convert.ToInt32((serviceGPS[s][1] - minY) / unitY);
-            }
-
-            return services;
+            map.services = services;
         }
     }
 }

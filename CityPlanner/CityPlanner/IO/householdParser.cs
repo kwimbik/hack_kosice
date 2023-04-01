@@ -8,7 +8,7 @@ using System.Threading.Tasks;
 
 namespace CityPlanner.IO
 {
-    internal class householdParser
+    internal class HouseholdParser
     {
 
         public static Map parseHouseholds(Map map)
