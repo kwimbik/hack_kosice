@@ -30,10 +30,25 @@ namespace CityPlanner
 
         private void makeLP()
         {
-            Variable x = solver.MakeNumVar(0.0, map.Width, "x");
-            Variable y = solver.MakeNumVar(0.0, map.Height, "y");
+            // x, y = proměnné pozice služby
+            // užitková funkce = -sum(vzdálenost(oblast,x,y))
 
-            solver.Maximize(Functions.utility(areas, new ServiceLocation {X = x, Y = y});
+            Variable x = solver.MakeNumVar(0, map.Width, "x");
+            Variable y = solver.MakeNumVar(0, map.Height, "y");
+
+            solver.Maximize(objective_fce(areas, x, y);
+
+            var pole = areas.Select(unit => Math.Abs(unit.X - x) + Math.Abs(unit.Y - y));
+        }
+        private LinearExpr objective_fce(List<DemographicUnit> areas, Variable x, Variable y)
+        {
+            
+
+
+        }
+        private float distance(DemographicUnit unit, float x, float y)
+        {
+            return Math.Abs(unit.X - x) + Math.Abs(unit.Y - y);
         }
 
         private void AddVariables()
