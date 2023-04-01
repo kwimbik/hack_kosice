@@ -187,14 +187,30 @@ namespace CityPlanner
             InitMap();
         }
 
+        private void Refresh_Click(object sender, RoutedEventArgs e)
+        {
+            List<ServiceLocation> locations = new List<ServiceLocation>();
+            List<string> selected = new List<string>();
+
+            foreach (ServiceDefinition service in Model.ServiceDefinitions.Where(s => s.shown == true))
+            {
+                selected.Add(service.Type);
+            }
+
+            foreach (var type in selected)
+            {
+                locations.AddRange(map.Services.Where(s => s.Definition.Type == type).ToList());
+            }
+
+            DrawServicesMap(locations);
+        }
+
         private void Stats_Click(object sender, RoutedEventArgs e)
         {
             string file = @"..\..\..\..\..\maps\map_1.csv";
             
             HouseholdParser.parseHouseholds(map);
             ServiceParser.parseServices(map);
-
-            //List<ServiceLocation> locations = map.Services.Where(s => s.Definition.Type == "MHD").ToList();
         }
 
         private void Evo_Click(object sender, RoutedEventArgs e)

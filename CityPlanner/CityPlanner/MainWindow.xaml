@@ -22,7 +22,8 @@
                         <RowDefinition/>
                     </Grid.RowDefinitions>
                     <ToolBar Grid.Row="0" Grid.ColumnSpan="2">
-                        <Button Content="Show service stats" Click="Stats_Click"/>
+                        <Button Content="Load files" Click="Stats_Click"/>
+                        <Button Content="Refresh" Click="Refresh_Click"/>
                         <Button Content="Run evo" Click="Evo_Click"/>
                     </ToolBar>
                     <DataGrid x:Name="dgServices" Grid.Column="0" Grid.Row="1"/>
