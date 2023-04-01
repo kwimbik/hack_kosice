@@ -167,14 +167,14 @@ namespace CityPlanner
             s1.X = 50;
             s1.Y = 10;
             ServiceLocation s2 = new ServiceLocation();
-            s1.X = 1;
-            s1.Y = 13;
+            s2.X = 1;
+            s2.Y = 13;
             ServiceLocation s3 = new ServiceLocation();
-            s1.X = 74;
-            s1.Y = 51;
+            s3.X = 89;
+            s3.Y = 89;
             ServiceLocation s4 = new ServiceLocation();
-            s1.X = 25;
-            s1.Y = 12;
+            s4.X = 3;
+            s4.Y = 65;
 
             List<ServiceLocation> locations = new List<ServiceLocation>() { s1, s2, s3, s4 };
 
@@ -188,7 +188,7 @@ namespace CityPlanner
             const int demoUnitHeight = 5;
 
             float[,] stats = Stats.getServiceStats(map, locations);
-            const float maxOkDistance = 50;
+            const float maxOkDistance = 60;
 
             for (int i = 0; i < map.Width; i++)
             {
