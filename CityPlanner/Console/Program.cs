@@ -9,7 +9,7 @@ namespace CityConsole
         const int IND_SIZE = 4;
         const int MAP_WIDTH = 100;
         const int MAP_HEIGHT = 100;
-        static Random rand = new(666);
+        static Random rand = new();
 
         static void Main(string[] args)
         {
@@ -127,24 +127,36 @@ namespace CityConsole
                 if (rand.NextDouble() < mutProbSmall)
                 {
                     int index = rand.Next(population[i].Services.Length);
-                    if (rand.NextDouble() < 0.5)
+                    double val = rand.NextDouble();
+                    if (val < 0.3)
                     {
                         population[i].Services[index].X += rand.NextDouble() < 0.5 ? 1 : -1;
                     }
-                    else
+                    else if (val < 0.6)
                     {
                         population[i].Services[index].Y += rand.NextDouble() < 0.5 ? 1 : -1;
                     }
+                    else
+                    {
+                        population[i].Services[index].X += rand.NextDouble() < 0.5 ? 1 : -1;
+                        population[i].Services[index].Y += rand.NextDouble() < 0.5 ? 1 : -1;
+                    }
                 }
-                else if (rand.NextDouble() < mutProbSmall)
+                else if (rand.NextDouble() < mutProbLarge)
                 {
                     int index = rand.Next(population[i].Services.Length);
-                    if (rand.NextDouble() < 0.5)
+                    double val = rand.NextDouble();
+                    if (val < 0.3)
                     {
                         population[i].Services[index].X += rand.NextDouble() < 0.5 ? 5 : -5;
                     }
+                    else if (val < 0.6)
+                    {
+                        population[i].Services[index].Y += rand.NextDouble() < 0.5 ? 5 : -5;
+                    }
                     else
                     {
+                        population[i].Services[index].X += rand.NextDouble() < 0.5 ? 5 : -5;
                         population[i].Services[index].Y += rand.NextDouble() < 0.5 ? 5 : -5;
                     }
 
