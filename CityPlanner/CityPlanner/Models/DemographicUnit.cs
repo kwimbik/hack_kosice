@@ -10,5 +10,7 @@ namespace CityPlanner.Models
     {
         public int Population { get; set; }
         public double IncomeAvg { get; set; }
+        public double LocationX { get; set; }
+        public double LocationY { get; set; }
     }
 }
