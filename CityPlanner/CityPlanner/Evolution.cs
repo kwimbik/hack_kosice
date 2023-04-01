@@ -15,13 +15,11 @@ namespace CityPlanner
 
         public event GenerationEventHandler GenerationEvent;
 
-        private int _mapWidth;
-        private int _mapHeight;
+        private Map _map;
 
         public void Run(Map map, int popSize, int indSize, int generations)
         {
-            _mapHeight = map.Height;
-            _mapWidth = map.Width;
+            _map = map;
 
             Individual[] population = InitPopulation(popSize, indSize);
             for (int g = 0; g < generations; g++)
@@ -49,9 +47,9 @@ namespace CityPlanner
         private double Fitness(Individual individual)
         {
             double invFitness = 0;
-            for (int x = 0; x < _mapWidth; x++)
+            for (int x = 0; x < _map.Width; x++)
             {
-                for (int y = 0; y < _mapHeight; y++)
+                for (int y = 0; y < _map.Height; y++)
                 {
                     double minDist = double.MaxValue;
                     for (int i = 0; i < individual.Services.Length; i++)
@@ -74,7 +72,7 @@ namespace CityPlanner
                 ind.Services = new Cords[indSize];
                 for (int j = 0; j < indSize; j++)
                 {
-                    ind.Services[j] = new Cords() { X = _rand.Next(_mapWidth), Y = _rand.Next(_mapHeight) };
+                    ind.Services[j] = new Cords() { X = _rand.Next(_map.Width), Y = _rand.Next(_map.Height) };
                 }
                 population[i] = ind;
 
