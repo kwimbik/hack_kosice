@@ -5,8 +5,19 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:CityPlanner"
         mc:Ignorable="d"
-        Title="MainWindow" Height="450" Width="800">
+        Title="MainWindow" Height="450" Width="800" Loaded="Window_Loaded">
     <Grid>
+        <TabControl>
+            <TabItem Header="City map">
+                <Grid>
+                    <Canvas x:Name="cMMap">
+
+                    </Canvas>
+                </Grid>
+            </TabItem>
+            <TabItem Header="Services">
+            </TabItem>
+        </TabControl>
 
     </Grid>
 </Window>

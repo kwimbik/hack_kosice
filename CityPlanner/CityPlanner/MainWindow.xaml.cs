@@ -20,9 +20,85 @@ namespace CityPlanner
     /// </summary>
     public partial class MainWindow : Window
     {
+        #region Contsructors
+
         public MainWindow()
         {
             InitializeComponent();
+        }
+
+        #endregion
+
+        #region Manhattan map
+
+        private void DrawManhattanMap()
+        {
+           
+        }
+
+        private void DrawManhattanBackground()
+        {
+            Image image = new();
+            DrawingImage drawingImage = new();
+            DrawingGroup drawingGroup = new();
+
+            const int width = 100;
+            const int height = 100;
+            const int demoUnitWidth = 5;
+            const int demoUnitHeight = 5;
+
+            for (int i = 0; i < width; i++)
+            {
+                for (int j = 0; j < height; j++)
+                {
+                    int x = i * demoUnitWidth;
+                    int y = j * demoUnitHeight;
+
+                    // Draw demographic unit
+                    Color color = Color.FromRgb((byte)(2 * x), (byte)(2 * y), 255);
+                    GeometryDrawing gd = new();
+                    drawingGroup.Children.Add(gd);
+                }
+            }
+            drawingImage.Drawing = drawingGroup;
+            image.Source = drawingImage;
+        }
+        
+        private void DrawRectangle(double x, double y, double width, double height, Color strokeColor, int strokeThickness, Color fillColor)
+        {
+            Rectangle rect = new()
+            {
+                Width = width,
+                Height = height,
+                Stroke = new SolidColorBrush(strokeColor),
+                StrokeThickness = strokeThickness,
+                Fill = new SolidColorBrush(fillColor),
+            };
+            Canvas.SetLeft(rect, x);
+            Canvas.SetTop(rect, y);
+            cMMap.Children.Add(rect);
+        }
+
+        private void DrawLine(double x1, double x2, double y1, double y2, Color color, int thickness)
+        {
+            Line line = new()
+            {
+                X1 = x1,
+                X2 = x2,
+                Y1 = y1,
+                Y2 = y2,
+                Stroke = new SolidColorBrush(color),
+                StrokeThickness = thickness
+            };
+            cMMap.Children.Add(line);
+        }
+
+
+        #endregion
+
+        private void Window_Loaded(object sender, RoutedEventArgs e)
+        {
+            DrawManhattanMap();
         }
     }
 }
