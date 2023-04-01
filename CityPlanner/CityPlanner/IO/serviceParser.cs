@@ -1,6 +1,7 @@
 ﻿using CityPlanner.Models;
 using System;
 using System.Collections.Generic;
+using System.Globalization;
 using System.IO;
 using System.Linq;
 using System.Reflection.Metadata;
@@ -35,8 +36,8 @@ namespace CityPlanner.IO
                     {
                         ServiceLocation service = new ServiceLocation();
                         service.Definition = new ServiceDefinition { Name = line[1], Type = line[2] };
-                        service.X = Convert.ToInt32(((float.Parse(line[4]) - map.Min_X) / map.Unit_X));
-                        service.Y = Convert.ToInt32(((float.Parse(line[5]) - map.Min_Y) / map.Unit_Y));
+                        service.X = Convert.ToInt32(((float.Parse(line[4], CultureInfo.InvariantCulture) - map.Min_X) / map.Unit_X));
+                        service.Y = Convert.ToInt32(((float.Parse(line[5], CultureInfo.InvariantCulture) - map.Min_Y) / map.Unit_Y));
                         services.Add(service);
                     }
                 }
