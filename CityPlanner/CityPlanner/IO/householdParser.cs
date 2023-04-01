@@ -57,16 +57,14 @@ namespace CityPlanner.IO
                 {
                     line = currentLine.Split(',');
 
-                    float x = (float.Parse(line[3]) - minX)/map.Unit_X;
-                    float y = (float.Parse(line[4]) - minY) / map.Unit_Y;
+                    float x = (float.Parse(line[3]) - minX)/map.Unit_X - 1;
+                    float y = (float.Parse(line[4]) - minY) / map.Unit_Y - 1;
 
-                    map.Matrix[Convert.ToInt32(x), Convert.ToInt32(y)].Population = Convert.ToInt32(line[12]);
+                    map.Matrix[Math.Max(0, Convert.ToInt32(x)), Math.Max(0, Convert.ToInt32(y))].Population = (int)Convert.ToDouble(line[12]);
                 }
 
                 sr.Close();
             }
-
-
             return map;
         }
     }

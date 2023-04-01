@@ -1,4 +1,5 @@
-﻿using CityPlanner.Models;
+﻿using CityPlanner.IO;
+using CityPlanner.Models;
 using Microsoft.Win32;
 using System;
 using System.Collections.Generic;
@@ -129,6 +130,7 @@ namespace CityPlanner
             string file = @"..\..\..\..\..\maps\map_1.csv";
             Map map = new();
             map.LoadFromCsv(file);
+            map = householdParser.parseHouseholds(map);
 
             DrawMap(map);
         }
