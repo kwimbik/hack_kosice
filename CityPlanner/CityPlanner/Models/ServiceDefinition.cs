@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace CityPlanner.Models
 {
-    internal class Service
+    internal class ServiceDefinition
     {
         public string Name { get; set; }
     }
