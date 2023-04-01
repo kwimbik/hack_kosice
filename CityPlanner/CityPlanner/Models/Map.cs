@@ -9,8 +9,8 @@ namespace CityPlanner.Models
 {
     internal class Map
     {
-        public string Width { get; set; }
-        public string Height { get; set; }
+        public int Width { get; set; }
+        public int Height { get; set; }
         public DemographicUnit[,] Matrix { get; set; }
 
         public double Distance(ILocation l1, ILocation l2)
