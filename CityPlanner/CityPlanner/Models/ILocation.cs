@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace CityPlanner.Models
 {
-    internal interface ILocation
+    public interface ILocation
     {
         public int X { get; set; }
         public int Y { get; set; }
