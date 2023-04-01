@@ -19,7 +19,7 @@ namespace CityPlanner.IO
             List<string> types = new List<string> { 
             "ambulancia zubnÃ©ho lekÃ¡rstva", "VÅ¡eobecnÃ¡ ambulancia pre deti", "PoÅ¡ty", "restaurant" , "playground", "Vybehy_psy",
             "chemist", "parcel_locker", "MHD", "fitness", "bar", "pub", "fast_food,", "MS", "fitness", "pharmacy",
-            "convenience", "cafe", "VÅ¡eobecnÃ¡ ambulancia pre dospelÃ½ch",
+            "convenience", "cafe", "VÅ¡eobecnÃ¡ ambulancia pre dospelÃ½ch", "Pošty",
             };
             string file = @"..\..\..\..\..\Datasets\POIs_location_catchments.csv";
           
@@ -39,6 +39,10 @@ namespace CityPlanner.IO
                         service.X = Convert.ToInt32(((float.Parse(line[4], CultureInfo.InvariantCulture) - map.Min_X) / map.Unit_X));
                         service.Y = Convert.ToInt32(((float.Parse(line[5], CultureInfo.InvariantCulture) - map.Min_Y) / map.Unit_Y));
                         services.Add(service);
+                    }
+                    else
+                    {
+                        Console.WriteLine("here");
                     }
                 }
             }
