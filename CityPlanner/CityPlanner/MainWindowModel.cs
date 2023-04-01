@@ -14,11 +14,7 @@ namespace CityPlanner
 
         public MainWindowModel() 
         {
-            ServiceDefinitions.Add(new ServiceDefinition() { Name = "Hospital" });
-            ServiceDefinitions.Add(new ServiceDefinition() { Name = "KFC" });
-            ServiceDefinitions.Add(new ServiceDefinition() { Name = "Cemetery" });
-            ServiceDefinitions.Add(new ServiceDefinition() { Name = "Church" });
-            ServiceDefinitions.Add(new ServiceDefinition() { Name = "Post office" });
+          
         }
     }
 }
