@@ -27,7 +27,7 @@
                     <StackPanel Grid.Column="0" Grid.Row="1">
                         <ListBox x:Name="lbServices"/>
                     </StackPanel>
-                    <Canvas x:Name="cMMap" Grid.Column="1" Grid.Row="1"/>
+                    <Canvas x:Name="cMMap" Grid.Column="1" Grid.Row="1" MouseMove="cMMap_MouseMove"/>
                 </Grid>
             </TabItem>
             <TabItem Header="Services">
