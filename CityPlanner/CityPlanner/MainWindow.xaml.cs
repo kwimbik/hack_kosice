@@ -27,6 +27,8 @@ namespace CityPlanner
         public MainWindow()
         {
             InitializeComponent();
+            grid.ColumnDefinitions.Add(new ColumnDefinition());
+            grid.ColumnDefinitions.Add(new ColumnDefinition());
         }
 
         #endregion
@@ -71,6 +73,7 @@ namespace CityPlanner
             cMMap.Children.Add(image);
         }
 
+
         private void DrawRectangle(double x, double y, double width, double height, Color strokeColor, int strokeThickness, Color fillColor)
         {
             Rectangle rect = new()
@@ -107,7 +110,7 @@ namespace CityPlanner
 
         private void Window_Loaded(object sender, RoutedEventArgs e)
         {
-            string file = @"C:\MFFUK\hack_kosice\maps\map_1.csv";
+            string file = @"..\..\..\..\..\maps\map_1.csv";
             Map map = new();
             map.LoadFromCsv(file);
 
@@ -120,5 +123,10 @@ namespace CityPlanner
         }
 
         #endregion
+
+        private void run_btn_Click(object sender, RoutedEventArgs e)
+        {
+            //TODO BARA
+        }
     }
 }
