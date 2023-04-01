@@ -1,4 +1,5 @@
-﻿using System;
+﻿using CityPlanner.Models;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -33,10 +34,9 @@ namespace CityPlanner
 
         private void DrawManhattanMap()
         {
-            DrawManhattanBackground(100, 100);
         }
 
-        private void DrawManhattanBackground(int width, int height)
+        private void DrawManhattanBackground(Map map)
         {
             Image image = new();
             DrawingImage drawingImage = new();
@@ -45,8 +45,10 @@ namespace CityPlanner
             const int demoUnitWidth = 5;
             const int demoUnitHeight = 5;
 
-            int xMax = width * demoUnitWidth;
-            int yMax = width * demoUnitWidth;
+            int width = map.Matrix.GetLength(0);
+            int height = map.Matrix.GetLength(1);
+
+            int maxPopulation = map.Matrix.Cast<int>().Max();
 
             for (int i = 0; i < width; i++)
             {
@@ -56,7 +58,8 @@ namespace CityPlanner
                     double y = j * demoUnitHeight;
 
                     // Draw demographic unit
-                    Color color = Color.FromRgb((byte)(255 * x / xMax), (byte)(255 * y / yMax), 255);
+                    int population = map.Matrix[i, j].Population;
+                    Color color = Color.FromRgb((byte)(255 * population / maxPopulation), 0, 0);
                     GeometryDrawing gd = new() 
                     { 
                         Geometry = new RectangleGeometry(new Rect() { X = x, Y = y, Width = demoUnitWidth, Height = demoUnitHeight }), 
