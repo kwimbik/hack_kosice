@@ -10,9 +10,9 @@ namespace CityPlanner
     {
         public delegate void GenerationEventHandler(int generation, Individual[] population, double[] fitnesses);
 
-        const int POP_SIZE = 100;
-        const int GENS = 100;
-        const int IND_SIZE = 4;
+        const int POP_SIZE = 10;
+        const int GENS = 1000;
+        const int IND_SIZE = 16;
         const int MAP_WIDTH = 100;
         const int MAP_HEIGHT = 100;
         private Random _rand = new();

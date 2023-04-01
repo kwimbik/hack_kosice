@@ -13,7 +13,6 @@ using System.Windows.Data;
 using System.Windows.Documents;
 using System.Windows.Input;
 using System.Windows.Media;
-using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
 
@@ -32,7 +31,7 @@ namespace CityPlanner
 
         #region Fields
 
-        private Dictionary<(int x, int y), GeometryDrawing> _geometry = new();
+        private Map map = new() { Matrix = new DemographicUnit[100, 100] };
 
         #endregion
 
@@ -46,6 +45,19 @@ namespace CityPlanner
         #endregion
 
         #region Manhattan map
+
+        private void InitMap()
+        {
+            for (int x = 0; x < map.Width; x++)
+            {
+                for (int y = 0; y < map.Height; y++)
+                {
+                    map.Matrix[x, y].X = x;
+                    map.Matrix[x, y].Y = y;
+                    map.Matrix[x, y].Population = 1;
+                }
+            }
+        }
 
         private void DrawMap(Map map)
         {
@@ -76,7 +88,6 @@ namespace CityPlanner
                         Geometry = new RectangleGeometry(new Rect() { X = x, Y = y, Width = demoUnitWidth, Height = demoUnitHeight }), 
                         Brush = new SolidColorBrush(color) 
                     };
-                    _geometry.Add((x, y), gd);
                     drawingGroup.Children.Add(gd);
                 }
             }
@@ -117,23 +128,9 @@ namespace CityPlanner
         }
 
 
-        #endregion
-
-        #region Form
-
-        private void Window_Loaded(object sender, RoutedEventArgs e)
+        private void DrawServicesMap(List<ServiceLocation> locations)
         {
-            dgServices.ItemsSource = Model.ServiceDefinitions;
-        }
-
-        private void Stats_Click(object sender, RoutedEventArgs e)
-        {
-            string file = @"..\..\..\..\..\maps\map_1.csv";
-            Map map = new() { Matrix = new DemographicUnit[100, 100] };
-            HouseholdParser.parseHouseholds(map);
-            ServiceParser.parseServices(map);
-
-            List<ServiceLocation> locations = map.Services.Where(s => s.Definition.Type == "MHD").ToList();
+            cMMap.Children.Clear();
 
             Image image = new();
             DrawingImage drawingImage = new();
@@ -142,8 +139,9 @@ namespace CityPlanner
             const int demoUnitWidth = 5;
             const int demoUnitHeight = 5;
 
+
             float[,] stats = Stats.getServiceStats(map, locations);
-            const float maxOkDistance = 60;
+            const float maxOkDistance = 15;
 
             for (int i = 0; i < map.Width; i++)
             {
@@ -178,19 +176,47 @@ namespace CityPlanner
             cMMap.Children.Add(image);
         }
 
+        #endregion
+
+        #region Form
+
+        private void Window_Loaded(object sender, RoutedEventArgs e)
+        {
+            dgServices.ItemsSource = Model.ServiceDefinitions;
+
+            InitMap();
+        }
+
+        private void Stats_Click(object sender, RoutedEventArgs e)
+        {
+            string file = @"..\..\..\..\..\maps\map_1.csv";
+            
+            HouseholdParser.parseHouseholds(map);
+            ServiceParser.parseServices(map);
+
+            //List<ServiceLocation> locations = map.Services.Where(s => s.Definition.Type == "MHD").ToList();
+        }
+
         private void Evo_Click(object sender, RoutedEventArgs e)
         {
-            Evolution evo = new();
-            evo.GenerationEvent += (g, population, fitnesses) =>
+            Task.Run(() =>
             {
-                if (g % 10 == 0)
+                Evolution evo = new();
+                evo.GenerationEvent += (g, population, fitnesses) =>
                 {
-                    int bestInPopIndex = Array.IndexOf(fitnesses, fitnesses.Max());
-                    Individual best = population[bestInPopIndex];
-                    
-                }
-            };
-            evo.Run();
+                    if (g % 10 == 0)
+                    {
+                        int bestInPopIndex = Array.IndexOf(fitnesses, fitnesses.Max());
+                        Individual best = population[bestInPopIndex];
+
+                        Application.Current.Dispatcher.BeginInvoke(new Action(() =>
+                        {
+                            DrawServicesMap(best.Services.Select(s => new ServiceLocation() { X = (int)s.X, Y = (int)s.Y }).ToList());
+                        }));
+                    }
+                };
+                evo.Run();
+            });
         }
 
         #endregion
