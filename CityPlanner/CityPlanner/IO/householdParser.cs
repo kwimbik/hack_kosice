@@ -31,10 +31,10 @@ namespace CityPlanner.IO
 
                     //map.Matrix[Convert.ToInt32(line[3]), Convert.ToInt32(line[4])].Population = Convert.ToInt32(line[12]);
 
-                    if (float.Parse(line[3]) < minX) minX = float.Parse(line[4]);
-                    if (float.Parse(line[3]) > maxX) maxX = float.Parse(line[4]);
-                    if (float.Parse(line[4]) < minY) minY = float.Parse(line[5]);
-                    if (float.Parse(line[4]) > maxY) maxY = float.Parse(line[5]);
+                    if (float.Parse(line[3]) < minX) minX = float.Parse(line[3]);
+                    if (float.Parse(line[3]) > maxX) maxX = float.Parse(line[3]);
+                    if (float.Parse(line[4]) < minY) minY = float.Parse(line[4]);
+                    if (float.Parse(line[4]) > maxY) maxY = float.Parse(line[4]);
                 }
 
                 sr.Close();
