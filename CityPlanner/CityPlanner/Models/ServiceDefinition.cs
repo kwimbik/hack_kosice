@@ -13,9 +13,11 @@ namespace CityPlanner.Models
         public string Type { get; set; }
         public int PopulationCapacity { get; set; }
 
+        public bool shown { get; set; }
+
         public override string ToString()
         {
-            return Name;
+            return Type;
         }
     }
 }

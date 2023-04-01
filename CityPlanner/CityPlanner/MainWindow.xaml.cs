@@ -124,7 +124,6 @@ namespace CityPlanner
         private void Window_Loaded(object sender, RoutedEventArgs e)
         {
             dgServices.ItemsSource = Model.ServiceDefinitions;
-            lbServices.ItemsSource = Model.ServiceDefinitions;
         }
 
         private void Stats_Click(object sender, RoutedEventArgs e)
@@ -132,7 +131,7 @@ namespace CityPlanner
             string file = @"..\..\..\..\..\maps\map_1.csv";
             Map map = new() { Matrix = new DemographicUnit[100, 100] };
             HouseholdParser.parseHouseholds(map);
-            //ServiceParser.parseServices(map);
+            ServiceParser.parseServices(map);
 
             List<ServiceLocation> locations = map.Services.Where(s => s.Definition.Type == "MHD").ToList();
 
