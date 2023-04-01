@@ -10,7 +10,27 @@ namespace CityPlanner
 {
     public class MainWindowModel
     {
-        public ObservableCollection<ServiceDefinition> ServiceDefinitions { get; set; } = new();
+        public ObservableCollection<ServiceDefinition> ServiceDefinitions { get; set; } = new ObservableCollection<ServiceDefinition> 
+        {
+        new ServiceDefinition {Type =  "ambulancia zubnÃ©ho lekÃ¡rstva"},
+        new ServiceDefinition {Type =  "VÅ¡eobecnÃ¡ ambulancia pre deti"},
+        new ServiceDefinition {Type =  "Pošty"},
+        new ServiceDefinition {Type =   "restaurant"},
+        new ServiceDefinition {Type =  "playground"},
+        new ServiceDefinition {Type =  "Vybehy_psy"},
+        new ServiceDefinition {Type =  "chemist"},
+        new ServiceDefinition {Type =  "MHD"},
+        new ServiceDefinition {Type =  "fitness"},
+        new ServiceDefinition {Type =  "bar"},
+        new ServiceDefinition {Type =  "pub"},
+        new ServiceDefinition {Type =  "fast_food"},
+        new ServiceDefinition {Type =  "MS"},
+        new ServiceDefinition {Type =  "fitness"},
+        new ServiceDefinition {Type =  "convenience"},
+        new ServiceDefinition {Type =  "cafe"},
+        new ServiceDefinition {Type =  "VÅ¡eobecnÃ¡ ambulancia pre dospelÃ½ch"},
+        new ServiceDefinition {Type =  "Pošty"},
+        };
 
         public MainWindowModel() 
         {

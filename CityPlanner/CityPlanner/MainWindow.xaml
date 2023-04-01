@@ -14,8 +14,8 @@
             <TabItem Header="City map">
                 <Grid>
                     <Grid.ColumnDefinitions>
-                        <ColumnDefinition Width="200" />
-                        <ColumnDefinition />
+                        <ColumnDefinition Width="1*" />
+                        <ColumnDefinition Width="2*"/>
                     </Grid.ColumnDefinitions>
                     <Grid.RowDefinitions>
                         <RowDefinition Height="Auto"/>
@@ -25,15 +25,8 @@
                         <Button Content="Show service stats" Click="Stats_Click"/>
                         <Button Content="Run evo" Click="Evo_Click"/>
                     </ToolBar>
-                    <StackPanel Grid.Column="0" Grid.Row="1">
-                        <ListBox x:Name="lbServices"/>
-                    </StackPanel>
+                    <DataGrid x:Name="dgServices" Grid.Column="0" Grid.Row="1"/>
                     <Canvas x:Name="cMMap" Grid.Column="1" Grid.Row="1"/>
-                </Grid>
-            </TabItem>
-            <TabItem Header="Services">
-                <Grid>
-                    <DataGrid x:Name="dgServices"/>
                 </Grid>
             </TabItem>
         </TabControl>
