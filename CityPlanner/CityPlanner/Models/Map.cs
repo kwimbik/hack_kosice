@@ -9,8 +9,8 @@ namespace CityPlanner.Models
 {
     internal class Map
     {
-        public int Width { get; set; }
-        public int Height { get; set; }
+        public int Width { get => Matrix.GetLength(0); }
+        public int Height { get => Matrix.GetLength(1); }
         public DemographicUnit[,] Matrix { get; set; }
 
         public double Distance(ILocation l1, ILocation l2)
@@ -22,7 +22,30 @@ namespace CityPlanner.Models
         {
             using(StreamReader sr = new(filepath))
             {
+                List<DemographicUnit[]> cols = new();
+                int y = 0;
+                while (!sr.EndOfStream) 
+                {
+                    string line = sr.ReadLine();
+                    string[] lineArr = line.Split(';');
+                    DemographicUnit[] row = new DemographicUnit[lineArr.Length];
+                    int x = 0;
+                    for (int i = 0; i < lineArr.Length; i++)
+                    {
+                        string[] demoUnitVals = lineArr[i].Split('/');
+                        row[i] = new DemographicUnit()
+                        {
+                            Y = y,
+                            X = x,
+                            IncomeAvg = double.Parse(demoUnitVals[0]),
+                            Population = int.Parse(demoUnitVals[1]),
+                        };
 
+                        x++;
+                    }
+
+                    y++;
+                }
             }
         }
     }

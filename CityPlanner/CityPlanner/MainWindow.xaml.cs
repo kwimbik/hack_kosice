@@ -1,4 +1,5 @@
 ﻿using CityPlanner.Models;
+using Microsoft.Win32;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -32,11 +33,7 @@ namespace CityPlanner
 
         #region Manhattan map
 
-        private void DrawManhattanMap()
-        {
-        }
-
-        private void DrawManhattanBackground(Map map)
+        private void DrawMap(Map map)
         {
             Image image = new();
             DrawingImage drawingImage = new();
@@ -115,7 +112,11 @@ namespace CityPlanner
 
         private void ImportMap_Click(object sender, RoutedEventArgs e)
         {
+            string file = @"C:\MFFUK\hack_kosice\maps\map_1.csv";
+            Map map = new();
+            map.LoadFromCsv(file);
 
+            DrawMap(map);
         }
 
         #endregion
