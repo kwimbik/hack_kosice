@@ -1,4 +1,5 @@
-﻿using System;
+﻿using CityPlanner.Models;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -17,10 +18,10 @@ namespace CityPlanner
         private int _mapWidth;
         private int _mapHeight;
 
-        public void Run(int mapWidth, int mapHeight, int popSize, int indSize, int generations)
+        public void Run(Map map, int popSize, int indSize, int generations)
         {
-            _mapHeight = mapHeight;
-            _mapWidth = mapWidth;
+            _mapHeight = map.Height;
+            _mapWidth = map.Width;
 
             Individual[] population = InitPopulation(popSize, indSize);
             for (int g = 0; g < generations; g++)

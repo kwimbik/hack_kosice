@@ -13,6 +13,7 @@ using System.Windows.Data;
 using System.Windows.Documents;
 using System.Windows.Input;
 using System.Windows.Media;
+using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
 
@@ -71,7 +72,7 @@ namespace CityPlanner
             int maxPopulation = 0;
             for (int i = 0; i < map.Width; i++)
                 for (int j = 0; j < map.Height; j++)
-                    if (map.Matrix[i,j].Population > maxPopulation) maxPopulation = map.Matrix[i,j].Population;
+                    if (map.Matrix[i, j].Population > maxPopulation) maxPopulation = map.Matrix[i, j].Population;
 
             for (int i = 0; i < map.Width; i++)
             {
@@ -81,12 +82,12 @@ namespace CityPlanner
                     int y = j * demoUnitHeight;
 
                     // Draw demographic unit
-                    int population = map.Matrix[i,j].Population;
+                    int population = map.Matrix[i, j].Population;
                     Color color = Color.FromRgb((byte)(255 * population / maxPopulation), 0, 0);
-                    GeometryDrawing gd = new() 
-                    { 
-                        Geometry = new RectangleGeometry(new Rect() { X = x, Y = y, Width = demoUnitWidth, Height = demoUnitHeight }), 
-                        Brush = new SolidColorBrush(color) 
+                    GeometryDrawing gd = new()
+                    {
+                        Geometry = new RectangleGeometry(new Rect() { X = x, Y = y, Width = demoUnitWidth, Height = demoUnitHeight }),
+                        Brush = new SolidColorBrush(color)
                     };
                     drawingGroup.Children.Add(gd);
                 }
@@ -133,6 +134,7 @@ namespace CityPlanner
             cMMap.Children.Clear();
 
             Image image = new();
+            image.Opacity = 0.4;
             DrawingImage drawingImage = new();
             DrawingGroup drawingGroup = new();
 
@@ -185,6 +187,9 @@ namespace CityPlanner
             dgServices.ItemsSource = Model.ServiceDefinitions;
 
             InitMap();
+
+            var imageKosice = new BitmapImage(new Uri(@"..\..\..\..\..\images\kosice.png", UriKind.Relative));
+            cMMap.Background = new ImageBrush(imageKosice);
         }
 
         private void Refresh_Click(object sender, RoutedEventArgs e)
@@ -207,8 +212,6 @@ namespace CityPlanner
 
         private void Stats_Click(object sender, RoutedEventArgs e)
         {
-            string file = @"..\..\..\..\..\maps\map_1.csv";
-            
             HouseholdParser.parseHouseholds(map);
             ServiceParser.parseServices(map);
         }
@@ -231,7 +234,7 @@ namespace CityPlanner
                         }));
                     }
                 };
-                evo.Run(map.Width, map.Height, 50, 4, 100);
+                evo.Run(map, 50, 4, 100);
             });
         }
 
