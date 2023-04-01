@@ -1,4 +1,5 @@
-﻿using CityPlanner.Models;
+﻿using CityPlanner.IO;
+using CityPlanner.Models;
 using Microsoft.Win32;
 using System;
 using System.Collections.Generic;
@@ -129,6 +130,8 @@ namespace CityPlanner
             string file = @"..\..\..\..\..\maps\map_1.csv";
             Map map = new();
             map.LoadFromCsv(file);
+            map = HouseholdParser.parseHouseholds(map);
+            ServiceParser.parseServices(map);
 
             DrawMap(map);
         }
@@ -150,6 +153,78 @@ namespace CityPlanner
 
         #endregion
 
+
+        private void run_btn_Click(object sender, RoutedEventArgs e)
+        {
+            //TODO BARA
+        }
+
+        private void Stats_Click(object sender, RoutedEventArgs e)
+        {
+            string file = @"..\..\..\..\..\maps\map_1.csv";
+            Map map = new();
+            map.LoadFromCsv(file);
+
+            ServiceDefinition definition = new ServiceDefinition();
+            ServiceLocation s1 = new ServiceLocation();
+            s1.X = 50;
+            s1.Y = 10;
+            ServiceLocation s2 = new ServiceLocation();
+            s2.X = 1;
+            s2.Y = 13;
+            ServiceLocation s3 = new ServiceLocation();
+            s3.X = 89;
+            s3.Y = 89;
+            ServiceLocation s4 = new ServiceLocation();
+            s4.X = 3;
+            s4.Y = 65;
+
+            List<ServiceLocation> locations = new List<ServiceLocation>() { s1, s2, s3, s4 };
+
+            // Vykradeno z Draw Map
+
+            Image image = new();
+            DrawingImage drawingImage = new();
+            DrawingGroup drawingGroup = new();
+
+            const int demoUnitWidth = 5;
+            const int demoUnitHeight = 5;
+
+            float[,] stats = Stats.getServiceStats(map, locations);
+            const float maxOkDistance = 60;
+
+            for (int i = 0; i < map.Width; i++)
+            {
+                for (int j = 0; j < map.Height; j++)
+                {
+                    double x = i * demoUnitWidth;
+                    double y = j * demoUnitHeight;
+
+                    // Draw demographic unit
+                    float stat = stats[i, j];
+                    Color color;
+                    if (stat > maxOkDistance)
+                    {
+                        color = Color.FromRgb(255, 0, 0);
+                    }
+                    else 
+                    {
+                        float normalizedDistance = stat / maxOkDistance;
+                        color = Color.FromRgb((byte)(normalizedDistance * 255),(byte)((1 - normalizedDistance) * 255), 0);
+                    }
+                    GeometryDrawing gd = new()
+                    {
+                        Geometry = new RectangleGeometry(new Rect() { X = x, Y = y, Width = demoUnitWidth, Height = demoUnitHeight }),
+                        Brush = new SolidColorBrush(color)
+                    };
+                    drawingGroup.Children.Add(gd);
+                }
+            }
+
+            drawingImage.Drawing = drawingGroup;
+            image.Source = drawingImage;
+            cMMap.Children.Add(image);
+        }
 
     }
 }

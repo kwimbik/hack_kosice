@@ -11,6 +11,17 @@ namespace CityPlanner.Models
     {
         public int Width { get => Matrix.GetLength(0); }
         public int Height { get => Matrix.GetLength(1); }
+
+        public float Max_X { get; set; }
+        public float Min_X { get; set; }
+        public float Max_Y { get; set; }
+        public float Min_Y { get; set; }
+
+        public float Unit_X { get; set; }
+        public float Unit_Y { get; set; }
+
+        public List<ServiceLocation> services { get; set; }
+
         
         public DemographicUnit[,] Matrix { get; set; }
 

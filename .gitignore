@@ -1,3 +1,5 @@
 \.vs
 \obj
 \bin
+/datasets/adresne_body_byty_KE.csv
+/datasets
