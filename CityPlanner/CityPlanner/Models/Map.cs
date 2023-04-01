@@ -7,10 +7,10 @@ using System.Threading.Tasks;
 
 namespace CityPlanner.Models
 {
-    internal class Map
+    public class Map
     {
-        public int Width { get => Matrix.GetLength(0); }
-        public int Height { get => Matrix.GetLength(1); }
+        public int Height { get => Matrix.GetLength(0); }
+        public int Width { get => Matrix.GetLength(1); }
         public DemographicUnit[,] Matrix { get; set; }
 
         public double Distance(ILocation l1, ILocation l2)
