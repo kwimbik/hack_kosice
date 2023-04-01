@@ -6,10 +6,9 @@ using System.Threading.Tasks;
 
 namespace CityPlanner.Models
 {
-    public class DemographicUnit : ILocation
+    internal class ServiceLocation : ILocation
     {
-        public int Population { get; set; }
-        public double IncomeAvg { get; set; }
+        public ServiceDefinition Definition { get; set; }
         public int X { get; set; }
         public int Y { get; set; }
     }
