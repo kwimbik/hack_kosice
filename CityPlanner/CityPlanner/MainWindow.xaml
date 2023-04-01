@@ -18,15 +18,15 @@
                         <RowDefinition Height="Auto"/>
                         <RowDefinition/>
                     </Grid.RowDefinitions>
-                    <ToolBar>
+                    <ToolBar Grid.Row="0" Grid.ColumnSpan="2">
                         <Button Content="Import map" Click="ImportMap_Click"/>
                     </ToolBar>
                     <Canvas x:Name="cMMap" Grid.Column="0">
 
                     </Canvas>
-                    <Canvas x:Name="controls" Grid.Column="1">
-                        <Button Grid.Column="1" Content="Button" HorizontalAlignment="Left" Margin="191,91,0,0" Grid.Row="1" VerticalAlignment="Top"/>
-                    </Canvas>
+                    <StackPanel Grid.Column="1" Grid.Row="1">
+                        <Button Grid.Column="0" Content="Button" HorizontalAlignment="Left" Grid.Row="1" VerticalAlignment="Top"/>
+                    </StackPanel>
                 </Grid>
             </TabItem>
             <TabItem Header="Services">
