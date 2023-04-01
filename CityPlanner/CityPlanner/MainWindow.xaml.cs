@@ -2,6 +2,7 @@
 using Microsoft.Win32;
 using System;
 using System.Collections.Generic;
+using System.Collections.ObjectModel;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -22,6 +23,12 @@ namespace CityPlanner
     /// </summary>
     public partial class MainWindow : Window
     {
+        #region Props
+
+        public MainWindowModel Model => (MainWindowModel)DataContext;
+
+        #endregion
+
         #region Contsructors
 
         public MainWindow()
@@ -108,6 +115,8 @@ namespace CityPlanner
 
         private void Window_Loaded(object sender, RoutedEventArgs e)
         {
+            dgServices.ItemsSource = Model.ServiceDefinitions;
+
             string file = @"..\..\..\..\..\maps\map_1.csv";
             Map map = new();
             map.LoadFromCsv(file);

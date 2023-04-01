@@ -9,5 +9,6 @@ namespace CityPlanner.Models
     public class ServiceDefinition
     {
         public string Name { get; set; }
+        public int PopulationCapacity { get; set; }
     }
 }

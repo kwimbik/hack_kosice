@@ -6,10 +6,13 @@
         xmlns:local="clr-namespace:CityPlanner"
         mc:Ignorable="d"
         Title="MainWindow" Height="450" Width="800" Loaded="Window_Loaded">
+    <Window.DataContext>
+        <local:MainWindowModel/>
+    </Window.DataContext>
     <Grid>
         <TabControl>
             <TabItem Header="City map">
-                <Grid x:Name="grid">
+                <Grid>
                     <Grid.ColumnDefinitions>
                         <ColumnDefinition Width="120" />
                         <ColumnDefinition />
@@ -30,6 +33,9 @@
                 </Grid>
             </TabItem>
             <TabItem Header="Services">
+                <Grid>
+                    <DataGrid x:Name="dgServices"/>
+                </Grid>
             </TabItem>
         </TabControl>
 
