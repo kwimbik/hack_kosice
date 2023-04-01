@@ -150,6 +150,82 @@ namespace CityPlanner
 
         #endregion
 
+<<<<<<< Updated upstream
 
+=======
+        private void run_btn_Click(object sender, RoutedEventArgs e)
+        {
+            //TODO BARA
+        }
+
+        private void Stats_Click(object sender, RoutedEventArgs e)
+        {
+            string file = @"..\..\..\..\..\maps\map_1.csv";
+            Map map = new();
+            map.LoadFromCsv(file);
+
+            ServiceDefinition definition = new ServiceDefinition();
+            ServiceLocation s1 = new ServiceLocation();
+            s1.X = 1;
+            s1.Y = 1;
+            ServiceLocation s2 = new ServiceLocation();
+            s1.X = 1;
+            s1.Y = 131;
+            ServiceLocation s3 = new ServiceLocation();
+            s1.X = 162;
+            s1.Y = 1;
+            ServiceLocation s4 = new ServiceLocation();
+            s1.X = 250;
+            s1.Y = 125;
+
+            List<ServiceLocation> locations = new List<ServiceLocation>() { s1, s2, s3, s4 };
+
+            // Vykradeno z Draw Map
+
+            Image image = new();
+            DrawingImage drawingImage = new();
+            DrawingGroup drawingGroup = new();
+
+            const int demoUnitWidth = 5;
+            const int demoUnitHeight = 5;
+
+            float[,] stats = Stats.getServiceStats(map, locations);
+
+            for (int i = 0; i < map.Width; i++)
+            {
+                for (int j = 0; j < map.Height; j++)
+                {
+                    double x = i * demoUnitWidth;
+                    double y = j * demoUnitHeight;
+
+                    // Draw demographic unit
+                    float stat = stats[i, j];
+                    Color color;
+                    switch (stat) 
+                    {
+                        case 0:
+                            color = Color.FromRgb(0, 255, 0);
+                            break;
+                        case 1:
+                            color = Color.FromRgb(255, 255, 0);
+                            break;
+                        default:
+                            color = Color.FromRgb(255, 0, 0);
+                            break;
+                    }
+                    GeometryDrawing gd = new()
+                    {
+                        Geometry = new RectangleGeometry(new Rect() { X = x, Y = y, Width = demoUnitWidth, Height = demoUnitHeight }),
+                        Brush = new SolidColorBrush(color)
+                    };
+                    drawingGroup.Children.Add(gd);
+                }
+            }
+
+            drawingImage.Drawing = drawingGroup;
+            image.Source = drawingImage;
+            cMMap.Children.Add(image);
+        }
+>>>>>>> Stashed changes
     }
 }
