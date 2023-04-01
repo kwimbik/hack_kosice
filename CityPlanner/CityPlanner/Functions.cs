@@ -21,18 +21,33 @@ namespace CityPlanner
             return Math.Abs(p1.X - p2.X) + Math.Abs(p1.Y - p2.Y);
         }
 
-        public static int getLocationStatus(DemographicUnit o, List<ServiceLocation> services)
+        public static float getLocationStatus(DemographicUnit o, List<ServiceLocation> services)
         {
-            float minDist = int.MaxValue;
-            foreach (ServiceLocation s in services)
+            //float minDist = int.MaxValue;
+            //foreach (ServiceLocation s in services)
+            //{
+            //    float distance = dist(o, s);
+            //    if (distance < minDist) minDist = distance;
+            // }
+
+            //if (minDist > -1) return 0; //green, tohle je dobry
+            //else if (minDist > -5) return 1; //tohle oranzovy
+            //else return 2; //tohle je red, spatny
+
+            const float okTreshold = 20; // TODO: Is this a kilometer? Who knows???
+            const float almostOkTreshold = 50;
+
+            float minDistance = float.MaxValue;
+            foreach (ServiceLocation s in services) 
             {
                 float distance = dist(o, s);
-                if (distance < minDist) minDist = distance;
-             }
+                if (distance < minDistance) 
+                {
+                    minDistance = distance;
+                }
+            }
 
-            if (minDist > -1) return 0; //green, tohle je dobry
-            else if (minDist > -5) return 1; //tohle oranzovy
-            else return 2; //tohle je red, spatny
+            return minDistance;
         }
     }
 }
