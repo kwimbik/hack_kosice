@@ -23,7 +23,7 @@ namespace CityPlanner
                     newLocation.Y = y;
                     locationsOnMap.Add(newLocation);
                     float newScore = Stats.getMapScore(map, locationsOnMap);
-                    locationsOnMap.RemoveAt(-1);
+                    locationsOnMap.RemoveAt(locationsOnMap.Count - 1);
 
                     if (newScore <= bestScore) 
                     {
