@@ -182,12 +182,6 @@ namespace CityPlanner
 
             //List<ServiceLocation> locations = new List<ServiceLocation>() { s1, s2, s3, s4 };
 
-
-            DrawStats(map, locations);
-        }
-
-        private void DrawStats(Map map, List<ServiceLocation> locations) 
-        {
             // Vykradeno z Draw Map
 
             List<ServiceLocation> locations = map.services.Where(s => s.Definition.Type == "MHD").ToList();
@@ -216,10 +210,10 @@ namespace CityPlanner
                     {
                         color = Color.FromRgb(255, 0, 0);
                     }
-                    else
+                    else 
                     {
                         float normalizedDistance = stat / maxOkDistance;
-                        color = Color.FromRgb((byte)(normalizedDistance * 255), (byte)((1 - normalizedDistance) * 255), 0);
+                        color = Color.FromRgb((byte)(normalizedDistance * 255),(byte)((1 - normalizedDistance) * 255), 0);
                     }
                     GeometryDrawing gd = new()
                     {
@@ -235,30 +229,5 @@ namespace CityPlanner
             cMMap.Children.Add(image);
         }
 
-        private void Add_Click(object sender, RoutedEventArgs e)
-        {
-            string file = @"..\..\..\..\..\maps\map_1.csv";
-            Map map = new();
-            map.LoadFromCsv(file);
-
-            ServiceDefinition definition = new ServiceDefinition();
-            ServiceLocation s1 = new ServiceLocation();
-            s1.X = 50;
-            s1.Y = 10;
-            ServiceLocation s2 = new ServiceLocation();
-            s2.X = 1;
-            s2.Y = 13;
-            ServiceLocation s3 = new ServiceLocation();
-            s3.X = 89;
-            s3.Y = 89;
-            ServiceLocation s4 = new ServiceLocation();
-            s4.X = 3;
-            s4.Y = 65;
-
-            List<ServiceLocation> locations = new List<ServiceLocation>() { s1, s2, s3, s4 };
-
-            List <ServiceLocation> newLocations = TilePlacer.PlaceN(map, locations, 3);
-            DrawStats(map, newLocations);
-        }
     }
 }

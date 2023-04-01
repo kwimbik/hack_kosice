@@ -24,7 +24,6 @@
                     <ToolBar Grid.Row="0" Grid.ColumnSpan="2">
                         <Button Content="Import map" Click="ImportMap_Click"/>
                         <Button Content="Show service stats" Click="Stats_Click"/>
-                        <Button Content="Add new services" Click="Add_Click"/>
                     </ToolBar>
                     <StackPanel Grid.Column="0" Grid.Row="1">
                         <ListBox x:Name="lbServices"/>
