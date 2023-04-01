@@ -9,7 +9,11 @@
     <Grid>
         <TabControl>
             <TabItem Header="City map">
-                <Grid>
+                <Grid x:Name="grid">
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition />
+                        <ColumnDefinition />
+                    </Grid.ColumnDefinitions>
                     <Grid.RowDefinitions>
                         <RowDefinition Height="Auto"/>
                         <RowDefinition/>
@@ -17,8 +21,11 @@
                     <ToolBar>
                         <Button Content="Import map" Click="ImportMap_Click"/>
                     </ToolBar>
-                    <Canvas x:Name="cMMap">
+                    <Canvas x:Name="cMMap" Grid.Column="0">
 
+                    </Canvas>
+                    <Canvas x:Name="controls" Grid.Column="1">
+                        <Button Grid.Column="1" Content="Button" HorizontalAlignment="Left" Margin="191,91,0,0" Grid.Row="1" VerticalAlignment="Top"/>
                     </Canvas>
                 </Grid>
             </TabItem>
