@@ -33,7 +33,7 @@ namespace CityPlanner
 
         private void DrawManhattanMap()
         {
-           
+            DrawManhattanBackground();
         }
 
         private void DrawManhattanBackground()
@@ -56,14 +56,20 @@ namespace CityPlanner
 
                     // Draw demographic unit
                     Color color = Color.FromRgb((byte)(2 * x), (byte)(2 * y), 255);
-                    GeometryDrawing gd = new();
+                    GeometryDrawing gd = new() 
+                    { 
+                        Geometry = new RectangleGeometry(new Rect() { X = x, Y = y, Width = demoUnitWidth, Height = demoUnitHeight }), 
+                        Brush = new SolidColorBrush(color) 
+                    };
                     drawingGroup.Children.Add(gd);
                 }
             }
+
             drawingImage.Drawing = drawingGroup;
             image.Source = drawingImage;
+            cMMap.Children.Add(image);
         }
-        
+
         private void DrawRectangle(double x, double y, double width, double height, Color strokeColor, int strokeThickness, Color fillColor)
         {
             Rectangle rect = new()
