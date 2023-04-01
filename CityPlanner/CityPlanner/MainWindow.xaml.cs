@@ -29,6 +29,12 @@ namespace CityPlanner
 
         #endregion
 
+        #region Fields
+
+        private Dictionary<(int x, int y), GeometryDrawing> _geometry = new();
+
+        #endregion
+
         #region Contsructors
 
         public MainWindow()
@@ -58,8 +64,8 @@ namespace CityPlanner
             {
                 for (int j = 0; j < map.Height; j++)
                 {
-                    double x = i * demoUnitWidth;
-                    double y = j * demoUnitHeight;
+                    int x = i * demoUnitWidth;
+                    int y = j * demoUnitHeight;
 
                     // Draw demographic unit
                     int population = map.Matrix[i,j].Population;
@@ -69,6 +75,7 @@ namespace CityPlanner
                         Geometry = new RectangleGeometry(new Rect() { X = x, Y = y, Width = demoUnitWidth, Height = demoUnitHeight }), 
                         Brush = new SolidColorBrush(color) 
                     };
+                    _geometry.Add((x, y), gd);
                     drawingGroup.Children.Add(gd);
                 }
             }
@@ -116,7 +123,7 @@ namespace CityPlanner
         private void Window_Loaded(object sender, RoutedEventArgs e)
         {
             dgServices.ItemsSource = Model.ServiceDefinitions;
-            lvServices.ItemsSource = Model.ServiceDefinitions;
+            lbServices.ItemsSource = Model.ServiceDefinitions;
             
 
             string file = @"..\..\..\..\..\maps\map_1.csv";
@@ -128,14 +135,21 @@ namespace CityPlanner
 
         private void ImportMap_Click(object sender, RoutedEventArgs e)
         {
-           
+
+        }
+        private void cMMap_MouseMove(object sender, MouseEventArgs e)
+        {
+            Point position = e.GetPosition(cMMap);
+            int x = (int)position.X;
+            int y = (int)position.Y;
+
+            var key = (x - x % 5, y - y % 5);
+            GeometryDrawing gd = _geometry[key];
+            //gd.Brush = new SolidColorBrush(Colors.Beige);
         }
 
         #endregion
 
-        private void run_btn_Click(object sender, RoutedEventArgs e)
-        {
-            //TODO BARA
-        }
+
     }
 }

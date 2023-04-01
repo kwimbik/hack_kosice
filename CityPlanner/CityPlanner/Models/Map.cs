@@ -9,8 +9,9 @@ namespace CityPlanner.Models
 {
     public class Map
     {
-        public int Height { get => Matrix.GetLength(0); }
-        public int Width { get => Matrix.GetLength(1); }
+        public int Width { get => Matrix.GetLength(0); }
+        public int Height { get => Matrix.GetLength(1); }
+        
         public DemographicUnit[,] Matrix { get; set; }
 
         public double Distance(ILocation l1, ILocation l2)
