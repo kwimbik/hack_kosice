@@ -24,10 +24,13 @@ namespace CityPlanner.Models
             {
                 List<DemographicUnit[]> cols = new();
                 int y = 0;
+                int width = 0;
+                int height = 0; 
                 while (!sr.EndOfStream) 
                 {
                     string line = sr.ReadLine();
                     string[] lineArr = line.Split(';');
+                    width = lineArr.Length;
                     DemographicUnit[] row = new DemographicUnit[lineArr.Length];
                     int x = 0;
                     for (int i = 0; i < lineArr.Length; i++)
@@ -40,12 +43,12 @@ namespace CityPlanner.Models
                             IncomeAvg = double.Parse(demoUnitVals[0]),
                             Population = int.Parse(demoUnitVals[1]),
                         };
-
                         x++;
                     }
-
+                    cols.Add(row);
                     y++;
                 }
+                Matrix = new DemographicUnit[width, height];
             }
         }
     }

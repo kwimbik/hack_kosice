@@ -10,7 +10,7 @@ namespace CityPlanner
 {
     internal class LinearProgram
     {
-        private Functions fce = new Functions();
+        //private Functions fce = new Functions();
 
         public LinearProgram() 
         {  

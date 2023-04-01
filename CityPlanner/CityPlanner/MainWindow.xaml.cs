@@ -42,20 +42,20 @@ namespace CityPlanner
             const int demoUnitWidth = 5;
             const int demoUnitHeight = 5;
 
-            int width = map.Matrix.GetLength(0);
-            int height = map.Matrix.GetLength(1);
+            int maxPopulation = 0;
+            for (int i = 0; i < map.Width; i++)
+                for (int j = 0; j < map.Height; j++)
+                    if (map.Matrix[i,j].Population > maxPopulation) maxPopulation = map.Matrix[i,j].Population;
 
-            int maxPopulation = map.Matrix.Cast<int>().Max();
-
-            for (int i = 0; i < width; i++)
+            for (int i = 0; i < map.Width; i++)
             {
-                for (int j = 0; j < height; j++)
+                for (int j = 0; j < map.Height; j++)
                 {
                     double x = i * demoUnitWidth;
                     double y = j * demoUnitHeight;
 
                     // Draw demographic unit
-                    int population = map.Matrix[i, j].Population;
+                    int population = map.Matrix[i,j].Population;
                     Color color = Color.FromRgb((byte)(255 * population / maxPopulation), 0, 0);
                     GeometryDrawing gd = new() 
                     { 
@@ -107,16 +107,16 @@ namespace CityPlanner
 
         private void Window_Loaded(object sender, RoutedEventArgs e)
         {
-            DrawManhattanMap();
-        }
-
-        private void ImportMap_Click(object sender, RoutedEventArgs e)
-        {
             string file = @"C:\MFFUK\hack_kosice\maps\map_1.csv";
             Map map = new();
             map.LoadFromCsv(file);
 
             DrawMap(map);
+        }
+
+        private void ImportMap_Click(object sender, RoutedEventArgs e)
+        {
+           
         }
 
         #endregion
