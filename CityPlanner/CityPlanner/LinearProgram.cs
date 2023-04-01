@@ -29,8 +29,8 @@ namespace CityPlanner
 
         private void AddVariables()
         {
-            Variable x = solver.MakeNumVar(0.0, map.Matrix.Width, "x");
-            Variable y = solver.MakeNumVar(0.0, map.Matrix.Height, "y");
+            Variable x = solver.MakeNumVar(0.0, map.Width, "x");
+            Variable y = solver.MakeNumVar(0.0, map.Height, "y");
 
         }
 
