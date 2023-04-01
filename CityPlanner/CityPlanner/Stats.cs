@@ -11,14 +11,14 @@ namespace CityPlanner
     {
         public static float[,] getServiceStats(Map map, List<ServiceLocation> services) 
         {
-            float[,] serviceStats = new float[map.Width, map.Height];
+            float[,] serviceStats = new float[map.Height, map.Width];
 
-            for (int x = 0; x < map.Width; x++) 
+            for (int y = 0; y < map.Height; y++) 
             {
-                for (int y = 0; y < map.Width; y++) 
+                for (int x = 0; x < map.Width; x++) 
                 {
                     float quality = Functions.getLocationStatus(map.Matrix[y,x], services);
-                    serviceStats[x, y] = quality;
+                    serviceStats[y, x] = quality;
                 }
             }
 

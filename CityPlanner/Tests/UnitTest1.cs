@@ -24,9 +24,9 @@ namespace Tests
             ServiceLocation l2 = new ServiceLocation();
 
             float[,] stats = Stats.getServiceStats(map, new List<ServiceLocation> { l1, l2 });
+            Assert.AreEqual(2, stats.GetLength(0));
+            Assert.AreEqual(3, stats.GetLength(1));
             Assert.IsTrue(stats[0, 0] <= 2 && stats[0, 0] >= 0);
-            Assert.AreEqual(3, stats.GetLength(0));
-            Assert.AreEqual(2, stats.GetLength(1));
         }
     }
 }
