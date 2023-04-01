@@ -127,49 +127,12 @@ namespace CityPlanner
             lbServices.ItemsSource = Model.ServiceDefinitions;
         }
 
-        private void ImportMap_Click(object sender, RoutedEventArgs e)
-        {
-
-        }
-
-        private void cMMap_MouseMove(object sender, MouseEventArgs e)
-        {
-            //Point position = e.GetPosition(cMMap);
-            //int x = (int)position.X;
-            //int y = (int)position.Y;
-
-            //var key = (x - x % 5, y - y % 5);
-            //GeometryDrawing gd = _geometry[key];
-            //gd.Brush = new SolidColorBrush(Colors.Beige);
-        }
-
-        #endregion
-
         private void Stats_Click(object sender, RoutedEventArgs e)
         {
             string file = @"..\..\..\..\..\maps\map_1.csv";
             Map map = new() { Matrix = new DemographicUnit[100, 100] };
             HouseholdParser.parseHouseholds(map);
             //ServiceParser.parseServices(map);
-
-
-            //ServiceDefinition definition = new ServiceDefinition();
-            //ServiceLocation s1 = new ServiceLocation();
-            //s1.X = 50;
-            //s1.Y = 10;
-            //ServiceLocation s2 = new ServiceLocation();
-            //s2.X = 1;
-            //s2.Y = 13;
-            //ServiceLocation s3 = new ServiceLocation();
-            //s3.X = 89;
-            //s3.Y = 89;
-            //ServiceLocation s4 = new ServiceLocation();
-            //s4.X = 3;
-            //s4.Y = 65;
-
-            //List<ServiceLocation> locations = new List<ServiceLocation>() { s1, s2, s3, s4 };
-
-            // Vykradeno z Draw Map
 
             List<ServiceLocation> locations = map.Services.Where(s => s.Definition.Type == "MHD").ToList();
 
@@ -220,5 +183,7 @@ namespace CityPlanner
         {
 
         }
+
+        #endregion
     }
 }
