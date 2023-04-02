@@ -12,14 +12,14 @@ namespace CityPlanner.IO
     internal class HouseholdParser
     {
 
-        public static void parseHouseholds(Map map)
+        public static void ParseHouseholds(Map map)
         {
             string file = @"..\..\..\..\..\Datasets\adresne_body_byty_KE.csv";
 
-            float minX = int.MaxValue;
-            float maxX = int.MinValue;
-            float minY = int.MaxValue;
-            float maxY = int.MinValue;
+            double minX = double.MaxValue;
+            double maxX = double.MinValue;
+            double minY = double.MaxValue;
+            double maxY = double.MinValue;
 
             using (StreamReader sr = new StreamReader(file))
             {
@@ -32,10 +32,10 @@ namespace CityPlanner.IO
 
                     //map.Matrix[Convert.ToInt32(line[3]), Convert.ToInt32(line[4])].Population = Convert.ToInt32(line[12]);
 
-                    if (float.Parse(line[3], CultureInfo.InvariantCulture) < minX) minX = float.Parse(line[3], CultureInfo.InvariantCulture);
-                    if (float.Parse(line[3], CultureInfo.InvariantCulture) > maxX) maxX = float.Parse(line[3], CultureInfo.InvariantCulture);
-                    if (float.Parse(line[4], CultureInfo.InvariantCulture) < minY) minY = float.Parse(line[4], CultureInfo.InvariantCulture);
-                    if (float.Parse(line[4], CultureInfo.InvariantCulture) > maxY) maxY = float.Parse(line[4], CultureInfo.InvariantCulture);
+                    if (double.Parse(line[3], CultureInfo.InvariantCulture) < minX) minX = double.Parse(line[3], CultureInfo.InvariantCulture);
+                    if (double.Parse(line[3], CultureInfo.InvariantCulture) > maxX) maxX = double.Parse(line[3], CultureInfo.InvariantCulture);
+                    if (double.Parse(line[4], CultureInfo.InvariantCulture) < minY) minY = double.Parse(line[4], CultureInfo.InvariantCulture);
+                    if (double.Parse(line[4], CultureInfo.InvariantCulture) > maxY) maxY = double.Parse(line[4], CultureInfo.InvariantCulture);
                 }
 
                 sr.Close();
@@ -58,10 +58,10 @@ namespace CityPlanner.IO
                 {
                     line = currentLine.Split(CultureInfo.CurrentCulture.TextInfo.ListSeparator);
 
-                    float x = (float.Parse(line[3], CultureInfo.InvariantCulture) - minX)/map.Unit_X - 1;
-                    float y = (float.Parse(line[4], CultureInfo.InvariantCulture) - minY) / map.Unit_Y - 1;
+                    double x = (double.Parse(line[3], CultureInfo.InvariantCulture) - minX)/map.Unit_X - 1;
+                    double y = (double.Parse(line[4], CultureInfo.InvariantCulture) - minY) / map.Unit_Y - 1;
 
-                    map.Matrix[Math.Max(0, Convert.ToInt32(x)), Math.Max(0, Convert.ToInt32(y))].Population = (int)Convert.ToDouble(line[12], CultureInfo.InvariantCulture);
+                    map.Matrix[Math.Max(0, Convert.ToInt32(x)), Math.Max(0, Convert.ToInt32(y))].Population += (int)Convert.ToDouble(line[12], CultureInfo.InvariantCulture);
                 }
 
                 sr.Close();

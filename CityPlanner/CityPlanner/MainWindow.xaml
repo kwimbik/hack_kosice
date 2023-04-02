@@ -5,7 +5,7 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:CityPlanner"
         mc:Ignorable="d"
-        Title="MainWindow" Height="450" Width="800" Loaded="Window_Loaded">
+        Title="MainWindow" Height="900" Width="1400" Loaded="Window_Loaded">
     <Window.DataContext>
         <local:MainWindowModel/>
     </Window.DataContext>
@@ -22,9 +22,10 @@
                         <RowDefinition/>
                     </Grid.RowDefinitions>
                     <ToolBar Grid.Row="0" Grid.ColumnSpan="2">
-                        <Button Content="Load files" Click="Stats_Click"/>
-                        <Button Content="Refresh" Click="Refresh_Click"/>
-                        <Button Content="Run evo" Click="Evo_Click"/>
+                        <Button Content="Load population" Click="LoadPopulation_Click"/>
+                        <Button Content="Load services" Click="LoadServices_Click"/>
+                        <Button Content="Refresh map" Click="Refresh_Click"/>
+                        <Button Content="Run evolution" Click="Evo_Click"/>
                     </ToolBar>
                     <DataGrid x:Name="dgServices" Grid.Column="0" Grid.Row="1"/>
                     <Canvas x:Name="cMMap" Grid.Column="1" Grid.Row="1" Background="Gray"/>
