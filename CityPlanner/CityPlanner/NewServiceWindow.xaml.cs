@@ -69,8 +69,15 @@ namespace CityPlanner
             {
                 try
                 {
-                    ServiceLocation sl = new ServiceLocation { X = int.Parse(Xcoord_tb.Text), Y = int.Parse(Ycoord_tb.Text), Definition = new ServiceDefinition { Type = types_cb.Text, Shown = false } };
-                    map.Services.Add(sl);
+                    int x = int.Parse(Xcoord_tb.Text);
+                    int y = int.Parse(Ycoord_tb.Text);
+                    ServiceLocation sl = new ServiceLocation { X = x , Y = y, Definition = new ServiceDefinition { Type = types_cb.Text, Shown = false } };
+                    if (x >= 0 && x <= map.Width && y >= 0 && y <= map.Height) map.Services.Add(sl);
+                    else
+                    {
+                        MessageBox.Show("please select valid location");
+                    }
+
                 }
                 catch (Exception)
                 {
