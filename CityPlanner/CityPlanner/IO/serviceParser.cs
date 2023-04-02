@@ -37,7 +37,7 @@ namespace CityPlanner.IO
                         ServiceLocation service = new ServiceLocation();
                         service.Definition = new ServiceDefinition { Name = line[1], Type = line[2] };
                         service.X = Convert.ToInt32(((double.Parse(line[4], CultureInfo.InvariantCulture) - map.Min_X) / map.Unit_X));
-                        service.Y = Convert.ToInt32(((double.Parse(line[5], CultureInfo.InvariantCulture) - map.Min_Y) / map.Unit_Y));
+                        service.Y = map.Height - (Convert.ToInt32(((double.Parse(line[5], CultureInfo.InvariantCulture) - map.Min_Y) / map.Unit_Y)));
                         services.Add(service);
                     }
                     else
