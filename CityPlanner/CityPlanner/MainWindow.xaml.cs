@@ -32,7 +32,7 @@ namespace CityPlanner
 
         #region Fields
 
-        private Map map = new() { Matrix = new DemographicUnit[100, 100] };
+        private Map map = new() { Matrix = new DemographicUnit[120, 80] };
 
         #endregion
 
