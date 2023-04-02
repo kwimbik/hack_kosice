@@ -87,7 +87,7 @@ namespace CityPlanner
 
                     // Draw demographic unit
                     int population = map.Matrix[i, j].Population;
-                    Color color = Color.FromArgb(100, 0, (byte)(255 *(double)population /maxPopulation), 0);
+                    Color color = Color.FromArgb(100, (byte)(255 * 100 * (double)population / maxPopulation), (byte)(255 * 100 * (double)population / maxPopulation), 0);
                     GeometryDrawing gd = new()
                     {
                         Geometry = new RectangleGeometry(new Rect() { X = x, Y = y, Width = demoUnitWidth, Height = demoUnitHeight }),
