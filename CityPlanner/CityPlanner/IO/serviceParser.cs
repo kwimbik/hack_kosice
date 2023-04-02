@@ -14,7 +14,7 @@ namespace CityPlanner.IO
     public static class ServiceParser
     {
 
-        public static void parseServices(Map map)
+        public static void ParseServices(Map map)
         {
             List<string> types = new List<string> { 
             "ambulancia zubnÃ©ho lekÃ¡rstva", "VÅ¡eobecnÃ¡ ambulancia pre deti", "PoÅ¡ty", "restaurant" , "playground", "Vybehy_psy",
@@ -36,8 +36,8 @@ namespace CityPlanner.IO
                     {
                         ServiceLocation service = new ServiceLocation();
                         service.Definition = new ServiceDefinition { Name = line[1], Type = line[2] };
-                        service.X = Convert.ToInt32(((float.Parse(line[4], CultureInfo.InvariantCulture) - map.Min_X) / map.Unit_X));
-                        service.Y = Convert.ToInt32(((float.Parse(line[5], CultureInfo.InvariantCulture) - map.Min_Y) / map.Unit_Y));
+                        service.X = Convert.ToInt32(((double.Parse(line[4], CultureInfo.InvariantCulture) - map.Min_X) / map.Unit_X));
+                        service.Y = Convert.ToInt32(((double.Parse(line[5], CultureInfo.InvariantCulture) - map.Min_Y) / map.Unit_Y));
                         services.Add(service);
                     }
                     else

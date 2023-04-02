@@ -32,11 +32,11 @@ namespace CityPlanner
 
         #region Fields
 
-        private Map map = new() { Matrix = new DemographicUnit[100, 100] };
+        private Map map = new() { Matrix = new DemographicUnit[150, 150] };
 
         #endregion
 
-        #region Contsructors
+        #region Constructors
 
         public MainWindow()
         {
@@ -60,14 +60,16 @@ namespace CityPlanner
             }
         }
 
-        private void DrawMap(Map map)
+        private void DrawPopulationMap()
         {
+            cMMap.Children.Clear();
+
             Image image = new();
             DrawingImage drawingImage = new();
             DrawingGroup drawingGroup = new();
 
-            const int demoUnitWidth = 5;
-            const int demoUnitHeight = 5;
+            double demoUnitWidth = cMMap.ActualWidth / map.Width;
+            double demoUnitHeight = cMMap.ActualHeight / map.Height;
 
             int maxPopulation = 0;
             for (int i = 0; i < map.Width; i++)
@@ -78,12 +80,12 @@ namespace CityPlanner
             {
                 for (int j = 0; j < map.Height; j++)
                 {
-                    int x = i * demoUnitWidth;
-                    int y = j * demoUnitHeight;
+                    double x = i * demoUnitWidth;
+                    double y = j * demoUnitHeight;
 
                     // Draw demographic unit
                     int population = map.Matrix[i, j].Population;
-                    Color color = Color.FromRgb((byte)(255 * population / maxPopulation), 0, 0);
+                    Color color = Color.FromRgb(0, (byte)(255 * (double)population / maxPopulation), 0);
                     GeometryDrawing gd = new()
                     {
                         Geometry = new RectangleGeometry(new Rect() { X = x, Y = y, Width = demoUnitWidth, Height = demoUnitHeight }),
@@ -98,52 +100,21 @@ namespace CityPlanner
             cMMap.Children.Add(image);
         }
 
-
-        private void DrawRectangle(double x, double y, double width, double height, Color strokeColor, int strokeThickness, Color fillColor)
+        private void DrawServicesMap(List<ServiceLocation> locations, bool clearChildern = true)
         {
-            Rectangle rect = new()
-            {
-                Width = width,
-                Height = height,
-                Stroke = new SolidColorBrush(strokeColor),
-                StrokeThickness = strokeThickness,
-                Fill = new SolidColorBrush(fillColor),
-            };
-            Canvas.SetLeft(rect, x);
-            Canvas.SetTop(rect, y);
-            cMMap.Children.Add(rect);
-        }
-
-        private void DrawLine(double x1, double x2, double y1, double y2, Color color, int thickness)
-        {
-            Line line = new()
-            {
-                X1 = x1,
-                X2 = x2,
-                Y1 = y1,
-                Y2 = y2,
-                Stroke = new SolidColorBrush(color),
-                StrokeThickness = thickness
-            };
-            cMMap.Children.Add(line);
-        }
-
-
-        private void DrawServicesMap(List<ServiceLocation> locations)
-        {
-            cMMap.Children.Clear();
+            if (clearChildern) cMMap.Children.Clear();
 
             Image image = new();
             image.Opacity = 0.4;
             DrawingImage drawingImage = new();
             DrawingGroup drawingGroup = new();
 
-            const int demoUnitWidth = 5;
-            const int demoUnitHeight = 5;
+            double demoUnitWidth = cMMap.ActualWidth / map.Width;
+            double demoUnitHeight = cMMap.ActualHeight / map.Height;
 
 
             float[,] stats = Stats.getServiceStats(map, locations);
-            const float maxOkDistance = 15;
+            const float maxOkDistance = 8;
 
             for (int i = 0; i < map.Width; i++)
             {
@@ -154,28 +125,47 @@ namespace CityPlanner
 
                     // Draw demographic unit
                     float stat = stats[i, j];
-                    Color color;
-                    if (stat > maxOkDistance)
+
+                    if (stat <= maxOkDistance)
                     {
-                        color = Color.FromRgb(255, 0, 0);
-                    }
-                    else
-                    {
+
                         float normalizedDistance = stat / maxOkDistance;
-                        color = Color.FromRgb((byte)(normalizedDistance * 255), (byte)((1 - normalizedDistance) * 255), 0);
+                        Color color = Color.FromRgb((byte)(normalizedDistance * 255), (byte)((1 - normalizedDistance) * 255), 0);
+
+                        GeometryDrawing gd = new()
+                        {
+                            Geometry = new RectangleGeometry(new Rect() { X = x, Y = y, Width = demoUnitWidth, Height = demoUnitHeight }),
+                            Brush = new SolidColorBrush(color)
+                        };
+                        drawingGroup.Children.Add(gd);
                     }
-                    GeometryDrawing gd = new()
-                    {
-                        Geometry = new RectangleGeometry(new Rect() { X = x, Y = y, Width = demoUnitWidth, Height = demoUnitHeight }),
-                        Brush = new SolidColorBrush(color)
-                    };
-                    drawingGroup.Children.Add(gd);
                 }
             }
 
             drawingImage.Drawing = drawingGroup;
             image.Source = drawingImage;
             cMMap.Children.Add(image);
+        }
+
+        #endregion
+
+        #region Services
+
+        private List<ServiceLocation> SelectedServiceLocations()
+        {
+            List<ServiceLocation> locations = new List<ServiceLocation>();
+            List<string> selected = new List<string>();
+
+            foreach (ServiceDefinition service in Model.ServiceDefinitions.Where(s => s.Shown == true))
+            {
+                selected.Add(service.Type);
+            }
+
+            foreach (var type in selected)
+            {
+                locations.AddRange(map.Services.Where(s => s.Definition.Type == type).ToList());
+            }
+            return locations;
         }
 
         #endregion
@@ -189,31 +179,30 @@ namespace CityPlanner
             InitMap();
 
             var imageKosice = new BitmapImage(new Uri(@"..\..\..\..\..\images\kosice.png", UriKind.Relative));
-            cMMap.Background = new ImageBrush(imageKosice);
+            //cMMap.Background = new ImageBrush(imageKosice);
         }
 
         private void Refresh_Click(object sender, RoutedEventArgs e)
         {
-            List<ServiceLocation> locations = new List<ServiceLocation>();
-            List<string> selected = new List<string>();
-
-            foreach (ServiceDefinition service in Model.ServiceDefinitions.Where(s => s.shown == true))
-            {
-                selected.Add(service.Type);
-            }
-
-            foreach (var type in selected)
-            {
-                locations.AddRange(map.Services.Where(s => s.Definition.Type == type).ToList());
-            }
-
-            DrawServicesMap(locations);
+            DrawPopulationMap();
+            DrawServicesMap(SelectedServiceLocations(), clearChildern: false);
         }
 
-        private void Stats_Click(object sender, RoutedEventArgs e)
+        private void LoadPopulation_Click(object sender, RoutedEventArgs e)
         {
-            HouseholdParser.parseHouseholds(map);
-            ServiceParser.parseServices(map);
+            Cursor = Cursors.Wait;
+            HouseholdParser.ParseHouseholds(map);
+            DrawPopulationMap();
+            Cursor = Cursors.Arrow;
+        }
+
+        private void LoadServices_Click(object sender, RoutedEventArgs e)
+        {
+            Cursor = Cursors.Wait;
+            ServiceParser.ParseServices(map);
+            DrawPopulationMap();
+            DrawServicesMap(SelectedServiceLocations(), clearChildern: false);
+            Cursor = Cursors.Arrow;
         }
 
         private void Evo_Click(object sender, RoutedEventArgs e)
