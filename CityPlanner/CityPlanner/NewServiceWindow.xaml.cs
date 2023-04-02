@@ -34,11 +34,21 @@ namespace CityPlanner
             StackPanel sp = new StackPanel();
             g.Children.Add(sp);
 
-            TextBox service_tb = new TextBox
+            ComboBox types_cb = new ComboBox
             {
-                Text = "Service",
+                Text = "Select Service type",
             };
-            sp.Children.Add(service_tb);
+
+            foreach (var s in map.Services)
+            {
+                if (types_cb.Items.Contains(s.Definition.Type) == false) 
+                {
+                    types_cb.Items.Add(s.Definition.Type);
+                }
+            }
+            sp.Children.Add(types_cb);
+            types_cb.SelectedIndex = 0;
+
             TextBox Xcoord_tb = new TextBox
             {
                 Text = "X coordinate",
@@ -57,8 +67,16 @@ namespace CityPlanner
 
             Confirm_tb.Click += (s, e) =>
             {
-                ServiceLocation sl = new ServiceLocation { X = int.Parse(Xcoord_tb.Text), Y = int.Parse(Ycoord_tb.Text), Definition = new ServiceDefinition { Type = service_tb.Text, Shown = false } };
-                map.Services.Add(sl);
+                try
+                {
+                    ServiceLocation sl = new ServiceLocation { X = int.Parse(Xcoord_tb.Text), Y = int.Parse(Ycoord_tb.Text), Definition = new ServiceDefinition { Type = types_cb.Text, Shown = false } };
+                    map.Services.Add(sl);
+                }
+                catch (Exception)
+                {
+                    MessageBox.Show("please select valid location");
+                }
+                
             };
             sp.Children.Add(Confirm_tb);
 
