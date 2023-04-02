@@ -231,6 +231,12 @@ namespace CityPlanner
             });
         }
 
+        private void AddService_Click(object sender, RoutedEventArgs e)
+        {
+
+        }
+
+
         #endregion
     }
 }
