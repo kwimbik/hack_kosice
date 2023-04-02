@@ -12,10 +12,10 @@ namespace CityPlanner.Models
         public int Width { get => Matrix.GetLength(0); }
         public int Height { get => Matrix.GetLength(1); }
 
-        public double Max_X { get; set; }
-        public double Min_X { get; set; }
-        public double Max_Y { get; set; }
-        public double Min_Y { get; set; }
+        public double Max_X { get => 21.360399; }
+        public double Min_X { get => 21.174135; }
+        public double Max_Y { get => 48.771657; }
+        public double Min_Y { get => 48.671984; }
 
         public double Unit_X { get; set; }
         public double Unit_Y { get; set; }
