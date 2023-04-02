@@ -113,7 +113,7 @@ namespace CityPlanner
             if (clearChildern) cMMap.Children.Clear();
 
             Image image = new();
-            image.Opacity = 0.4;
+            image.Opacity = 0.7;
             DrawingImage drawingImage = new();
             DrawingGroup drawingGroup = new();
 
@@ -140,7 +140,7 @@ namespace CityPlanner
                     {
 
                         float normalizedDistance = stat / maxOkDistance;
-                        color = Color.FromArgb((byte)(155 + (Math.Min(1,(1.3 - normalizedDistance)) * 100)), 0, 255, 0);
+                        color = Color.FromArgb((byte)(32 + (Math.Min(1,(1.15 - normalizedDistance)) * 223)), 0, 255, 0);
 
                     }
 
