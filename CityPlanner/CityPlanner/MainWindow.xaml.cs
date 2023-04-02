@@ -6,6 +6,7 @@ using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Linq;
 using System.Text;
+using System.Threading;
 using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Controls;
@@ -263,6 +264,8 @@ namespace CityPlanner
                             DrawServicesMap(SelectedServiceLocations(), clearChildern: false);
                             DrawServicesMap(best.Services.Select(s => new ServiceLocation() { X = (int)s.X, Y = (int)s.Y }).ToList(), clearChildern: false);
                         }));
+
+                        //Thread.Sleep(3000);
                     }
                 };
                 evo.Run(map, 50, 8, 1000);
