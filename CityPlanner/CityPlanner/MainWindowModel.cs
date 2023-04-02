@@ -12,8 +12,8 @@ namespace CityPlanner
     {
         public ObservableCollection<ServiceDefinition> ServiceDefinitions { get; set; } = new ObservableCollection<ServiceDefinition> 
         {
-        new ServiceDefinition {Type =  "ambulancia zubnÃ©ho lekÃ¡rstva"},
-        new ServiceDefinition {Type =  "VÅ¡eobecnÃ¡ ambulancia pre deti"},
+        new ServiceDefinition {Type =  "ambulancia zubného lekárstva"},
+        new ServiceDefinition {Type =  "Všeobecná ambulancia pre deti"},
         new ServiceDefinition {Type =  "Pošty"},
         new ServiceDefinition {Type =   "restaurant"},
         new ServiceDefinition {Type =  "playground"},
@@ -28,7 +28,7 @@ namespace CityPlanner
         new ServiceDefinition {Type =  "fitness"},
         new ServiceDefinition {Type =  "convenience"},
         new ServiceDefinition {Type =  "cafe"},
-        new ServiceDefinition {Type =  "VÅ¡eobecnÃ¡ ambulancia pre dospelÃ½ch"},
+        new ServiceDefinition {Type =  "Všeobecná ambulancia pre dospelých"},
         new ServiceDefinition {Type =  "Pošty"},
         };
 

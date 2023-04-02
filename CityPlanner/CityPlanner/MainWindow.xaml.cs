@@ -258,7 +258,7 @@ namespace CityPlanner
                         }));
                     }
                 };
-                evo.Run(map, 50, 7, 1000);
+                evo.Run(map, 50, 8, 1000);
             });
         }
 
