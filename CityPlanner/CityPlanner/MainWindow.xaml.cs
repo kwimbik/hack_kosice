@@ -58,6 +58,8 @@ namespace CityPlanner
                     map.Matrix[x, y].Population = 1;
                 }
             }
+
+            HouseholdParser.ParseHouseholds(map);
         }
 
         private void DrawPopulationMap()
@@ -211,7 +213,7 @@ namespace CityPlanner
         private void LoadPopulation_Click(object sender, RoutedEventArgs e)
         {
             Cursor = Cursors.Wait;
-            HouseholdParser.ParseHouseholds(map);
+            //HouseholdParser.ParseHouseholds(map);
             DrawPopulationMap();
             Cursor = Cursors.Arrow;
         }
@@ -246,11 +248,6 @@ namespace CityPlanner
                 };
                 evo.Run(map, 50, 7, 1000);
             });
-        }
-
-        private void AddService_Click(object sender, RoutedEventArgs e)
-        {
-
         }
 
 

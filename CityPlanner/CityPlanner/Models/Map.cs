@@ -20,6 +20,8 @@ namespace CityPlanner.Models
         public double Unit_X { get; set; }
         public double Unit_Y { get; set; }
 
+        public bool loaded = false;
+
         public List<ServiceLocation> Services { get; set; } = new();
         public DemographicUnit[,] Matrix { get; set; }
 

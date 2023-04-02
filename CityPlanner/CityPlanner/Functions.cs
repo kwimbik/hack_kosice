@@ -58,8 +58,8 @@ namespace CityPlanner
             //else if (minDist > -5) return 1; //tohle oranzovy
             //else return 2; //tohle je red, spatny
 
-            const float okTreshold = 20; // TODO: Is this a kilometer? Who knows???
-            const float almostOkTreshold = 50;
+            //const float okTreshold = 20; // TODO: Is this a kilometer? Who knows???
+            //const float almostOkTreshold = 50;
 
             float minDistance = float.MaxValue;
             foreach (ServiceLocation s in services) 
