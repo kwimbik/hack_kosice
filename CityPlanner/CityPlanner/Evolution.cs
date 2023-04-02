@@ -116,8 +116,8 @@ namespace CityPlanner
                 Array.Copy(p2.Services, xoverIndex, o1.Services, xoverIndex, p2.Services.Length - xoverIndex);
 
                 Individual o2 = p2.Clone();
-                Array.Copy(p1.Services, 0, o2.Services, 0, xoverIndex);
-                Array.Copy(p2.Services, xoverIndex, o2.Services, xoverIndex, p2.Services.Length - xoverIndex);
+                Array.Copy(p2.Services, 0, o2.Services, 0, xoverIndex);
+                Array.Copy(p1.Services, xoverIndex, o2.Services, xoverIndex, p1.Services.Length - xoverIndex);
 
                 newPopulation[i] = o1;
                 newPopulation[i + 1] = o2;
@@ -180,6 +180,23 @@ namespace CityPlanner
             Individual copy = new() { Services = new Cords[Services.Length] };
             Array.Copy(Services, copy.Services, Services.Length);
             return copy;
+        }
+    }
+
+    struct IntCords
+    {
+        public int X { get; set; }
+        public int Y { get; set; }
+
+        public IntCords(int x, int y)
+        {
+            X = x;
+            Y = y;
+        }
+
+        public override string ToString()
+        {
+            return $"({X},{Y})";
         }
     }
 

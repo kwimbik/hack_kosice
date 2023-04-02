@@ -30,11 +30,16 @@ namespace CityPlanner
 
         public MainWindowModel Model => (MainWindowModel)DataContext;
 
+        private int demoUnitWidth => (int)cMMap.ActualWidth / map.Width;
+        private int demoUnitHeight => (int)cMMap.ActualHeight / map.Height;
+
+
         #endregion
 
         #region Fields
 
         private Map map = new() { Matrix = new DemographicUnit[100, 100] };
+        private Dictionary<IntCords, DemographicUnit> _mapCords = new();
 
         #endregion
 
@@ -67,14 +72,13 @@ namespace CityPlanner
         private void DrawPopulationMap()
         {
             cMMap.Children.Clear();
+            _mapCords.Clear();
 
             Image image = new();
             DrawingImage drawingImage = new();
             DrawingGroup drawingGroup = new();
 
-            double demoUnitWidth = cMMap.ActualWidth / map.Width;
-            double demoUnitHeight = cMMap.ActualHeight / map.Height;
-
+           
             int maxPopulation = 0;
             for (int i = 0; i < map.Width; i++)
                 for (int j = 0; j < map.Height; j++)
@@ -84,8 +88,8 @@ namespace CityPlanner
             {
                 for (int j = 0; j < map.Height; j++)
                 {
-                    double x = i * demoUnitWidth;
-                    double y = j * demoUnitHeight;
+                    int x = i * demoUnitWidth;
+                    int y = j * demoUnitHeight;
 
                     // Draw demographic unit
                     int population = map.Matrix[i, j].Population;
@@ -100,6 +104,7 @@ namespace CityPlanner
                         Brush = new SolidColorBrush(color)
                     };
                     drawingGroup.Children.Add(gd);
+                    _mapCords.Add(new IntCords(x, y), map.Matrix[i, j]);
                 }
             }
 
@@ -117,10 +122,7 @@ namespace CityPlanner
             DrawingImage drawingImage = new();
             DrawingGroup drawingGroup = new();
 
-            double demoUnitWidth = cMMap.ActualWidth / map.Width;
-            double demoUnitHeight = cMMap.ActualHeight / map.Height;
-
-
+          
             float[,] stats = Stats.getServiceStats(map, locations);
             const float maxOkDistance = 8;
 
@@ -200,24 +202,22 @@ namespace CityPlanner
         {
             DrawPopulationMap();
             DrawServicesMap(SelectedServiceLocations(), clearChildern: false);
-            Display_info();
+            dgPeopleInfo.ItemsSource = Display_info();
         }
 
-        private void Display_info()
+        private ObservableCollection<InfoView> Display_info()
         {
-            string info = "";
-            List<string> selected = new List<string>();
+            ObservableCollection<InfoView>  info = new ObservableCollection<InfoView>();
 
             foreach (ServiceDefinition service in Model.ServiceDefinitions.Where(s => s.Shown == true))
             {
                 var locations = map.Services.Where(s => s.Definition.Type == service.Type).ToList();
 
                 var people = Functions.getPeopleStats(map, locations);
-                info += $"{service.Type}, #People of ouf 15 minute reach reach: {people.Item1}\n";
-                info += $"{service.Type}, #People within 15 minute reach reach: {people.Item2}\n";
-
+                info.Add(new InfoView { people = people.Item1, value = $"out of 15m reach for {service.Type}" });
+                info.Add(new InfoView { people = people.Item2, value = $"within 15m reach for {service.Type}" });
             }
-            MessageBox.Show(info);
+            return info;
         }
 
         private void LoadPopulation_Click(object sender, RoutedEventArgs e)
@@ -261,26 +261,39 @@ namespace CityPlanner
             });
         }
 
-        private void oblast_Click(object sender, RoutedEventArgs e)
+        private void cMMap_MouseDown(object sender, MouseButtonEventArgs e)
         {
-            DemographicUnit du = new DemographicUnit(); //tohle zjistit z clicku
-            string distances = "";
-            List<string> selected = new List<string>(); 
-
-            foreach (ServiceDefinition service in Model.ServiceDefinitions.Where(s => s.Shown == true))
+            Point loc = e.GetPosition(cMMap);
+            int x = (int)loc.X - (int)loc.X % demoUnitWidth;
+            int y = (int)loc.Y - (int)loc.Y % demoUnitHeight;
+            IntCords cords = new(x, y);
+            if (_mapCords.ContainsKey(cords))
             {
-                selected.Add(service.Type);
-            }
+                DemographicUnit du = _mapCords[cords];
+                string distances = "";
+                List<string> selected = new List<string>();
 
-            foreach (var type in selected)
-            {
-                List<ServiceLocation> locations = map.Services.Where(s => s.Definition.Type == type).ToList();
-                distances += $"type:{type}, distance:{Functions.getLocationStatus(du, locations)}\n";
+                foreach (ServiceDefinition service in Model.ServiceDefinitions.Where(s => s.Shown == true))
+                {
+                    selected.Add(service.Type);
+                }
+
+                foreach (var type in selected)
+                {
+                    List<ServiceLocation> locations = map.Services.Where(s => s.Definition.Type == type).ToList();
+                    distances += $"type:{type}, distance:{Functions.getLocationStatus(du, locations)}\n";
+                }
+                MessageBox.Show(distances);
             }
-            MessageBox.Show(distances);
+            else
+            {
+                throw new Exception("!!!!!");
+            }
         }
-
+        
 
         #endregion
+
+
     }
 }

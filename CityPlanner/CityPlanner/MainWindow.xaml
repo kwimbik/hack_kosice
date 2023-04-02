@@ -27,8 +27,11 @@
                         <Button Content="Refresh map" Click="Refresh_Click"/>
                         <Button Content="Run evolution" Click="Evo_Click"/>
                     </ToolBar>
-                    <DataGrid x:Name="dgServices" Grid.Column="0" Grid.Row="1"/>
-                    <Canvas x:Name="cMMap" Grid.Column="1" Grid.Row="1" Background="Gray"/>
+                    <StackPanel Grid.Column="0" Grid.Row="1">
+                        <DataGrid x:Name="dgServices" />
+                        <DataGrid x:Name="dgPeopleInfo"/>
+                    </StackPanel>
+                    <Canvas x:Name="cMMap" Grid.Column="1" Grid.Row="1" Background="Gray" MouseDown="cMMap_MouseDown"/>
                 </Grid>
             </TabItem>
         </TabControl>
