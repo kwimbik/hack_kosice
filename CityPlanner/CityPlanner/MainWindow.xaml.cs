@@ -9,6 +9,7 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Controls;
+using System.Windows.Controls.Primitives;
 using System.Windows.Data;
 using System.Windows.Documents;
 using System.Windows.Input;
@@ -16,6 +17,7 @@ using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
+using static Google.Protobuf.Reflection.SourceCodeInfo.Types;
 
 namespace CityPlanner
 {
@@ -87,7 +89,11 @@ namespace CityPlanner
 
                     // Draw demographic unit
                     int population = map.Matrix[i, j].Population;
-                    Color color = Color.FromArgb(100, (byte)(255 * 200 * (double)population / maxPopulation), 0, 0);
+                    Color color = Color.FromArgb((byte)(50 + (255 * (double)population / maxPopulation)), (byte)(255 - 255 * 10000 * (double)population / maxPopulation), (byte)(255 - 255 * 10000 * (double)population / maxPopulation), (byte)(255 - 255 * 10000 * (double)population / maxPopulation));
+                    if ((double)population / maxPopulation <= 1 / 10000) 
+                    {
+                        color = Color.FromArgb(0, 0, 0, 0);
+                    }
                     GeometryDrawing gd = new()
                     {
                         Geometry = new RectangleGeometry(new Rect() { X = x, Y = y, Width = demoUnitWidth, Height = demoUnitHeight }),
@@ -134,7 +140,7 @@ namespace CityPlanner
                     {
 
                         float normalizedDistance = stat / maxOkDistance;
-                        color = Color.FromArgb((byte)(35 + ((1 - normalizedDistance) * 220)), 0, 255, 0);
+                        color = Color.FromArgb((byte)(35 + ((1 - normalizedDistance) * 220)), 63, 0, 255);
 
                     }
 
@@ -209,6 +215,7 @@ namespace CityPlanner
                 var people = Functions.getPeopleStats(map, locations);
                 info += $"{service.Type}, #People of ouf 15 minute reach reach: {people.Item1}\n";
                 info += $"{service.Type}, #People within 15 minute reach reach: {people.Item2}\n";
+
             }
             MessageBox.Show(info);
         }
@@ -252,6 +259,25 @@ namespace CityPlanner
                 };
                 evo.Run(map, 50, 7, 1000);
             });
+        }
+
+        private void oblast_Click(object sender, RoutedEventArgs e)
+        {
+            DemographicUnit du = new DemographicUnit(); //tohle zjistit z clicku
+            string distances = "";
+            List<string> selected = new List<string>(); 
+
+            foreach (ServiceDefinition service in Model.ServiceDefinitions.Where(s => s.Shown == true))
+            {
+                selected.Add(service.Type);
+            }
+
+            foreach (var type in selected)
+            {
+                List<ServiceLocation> locations = map.Services.Where(s => s.Definition.Type == type).ToList();
+                distances += $"type:{type}, distance:{Functions.getLocationStatus(du, locations)}\n";
+            }
+            MessageBox.Show(distances);
         }
 
 
