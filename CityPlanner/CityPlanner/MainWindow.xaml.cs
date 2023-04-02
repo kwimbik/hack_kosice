@@ -270,10 +270,11 @@ namespace CityPlanner
             if (_mapCords.ContainsKey(cords))
             {
                 DemographicUnit du = _mapCords[cords];
-                string distances = "";
+                ObservableCollection<ServiceDistanceView> serviceDistances = new ObservableCollection<ServiceDistanceView>();
+
                 List<string> selected = new List<string>();
 
-                foreach (ServiceDefinition service in Model.ServiceDefinitions.Where(s => s.Shown == true))
+                foreach (ServiceDefinition service in Model.ServiceDefinitions)
                 {
                     selected.Add(service.Type);
                 }
@@ -281,13 +282,13 @@ namespace CityPlanner
                 foreach (var type in selected)
                 {
                     List<ServiceLocation> locations = map.Services.Where(s => s.Definition.Type == type).ToList();
-                    distances += $"type:{type}, distance:{Functions.getLocationStatus(du, locations)}\n";
+                    serviceDistances.Add(new ServiceDistanceView { serviceType = type, distance = Functions.getLocationStatus(du, locations) });
                 }
-                MessageBox.Show(distances);
+                dgPeopleInfo.ItemsSource = serviceDistances;
             }
             else
             {
-                throw new Exception("!!!!!");
+                //throw new Exception("!!!!!");
             }
         }
         
