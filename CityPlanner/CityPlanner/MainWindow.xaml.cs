@@ -132,7 +132,7 @@ namespace CityPlanner
                     {
 
                         float normalizedDistance = stat / maxOkDistance;
-                        Color color = Color.FromArgb((byte)((1 - normalizedDistance) * 255), 255, 255, 0);
+                        Color color = Color.FromArgb((byte)((1 - normalizedDistance) * 255), 0, 255, 0);
 
                         GeometryDrawing gd = new()
                         {
