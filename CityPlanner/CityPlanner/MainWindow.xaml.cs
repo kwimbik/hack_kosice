@@ -199,7 +199,10 @@ namespace CityPlanner
 
             foreach (var type in selected)
             {
-                locations.AddRange(map.Services.Where(s => s.Definition.Type == type).ToList());
+                foreach (var service in map.Services)
+                {
+                    if (service.Definition.Type == type) locations.Add(service);
+                }
             }
 
             DrawServicesMap(locations);
