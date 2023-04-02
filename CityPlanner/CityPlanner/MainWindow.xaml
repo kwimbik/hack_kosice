@@ -26,7 +26,6 @@
                         <Button Content="Load services" Click="LoadServices_Click"/>
                         <Button Content="Refresh map" Click="Refresh_Click"/>
                         <Button Content="Run evolution" Click="Evo_Click"/>
-                        <Button Content="Add service" Click="AddService_Click"/>
                     </ToolBar>
                     <DataGrid x:Name="dgServices" Grid.Column="0" Grid.Row="1"/>
                     <Canvas x:Name="cMMap" Grid.Column="1" Grid.Row="1" Background="Gray"/>

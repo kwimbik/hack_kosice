@@ -48,6 +48,7 @@ namespace CityPlanner.IO
 
             map.Unit_X = (maxX - minX) / map.Width;
             map.Unit_Y = (maxY - minY) / map.Height;
+            map.loaded = true;
 
             using (StreamReader sr = new StreamReader(file))
             {
