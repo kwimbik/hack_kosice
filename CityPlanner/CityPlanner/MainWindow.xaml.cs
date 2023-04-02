@@ -87,7 +87,11 @@ namespace CityPlanner
 
                     // Draw demographic unit
                     int population = map.Matrix[i, j].Population;
-                    Color color = Color.FromArgb(100, (byte)(255 - 255 * 10000 * (double)population / maxPopulation), (byte)(255 - 255 * 10000 * (double)population / maxPopulation), (byte)(255 - 255 * 10000 * (double)population / maxPopulation));
+                    Color color = Color.FromArgb((byte)(50 + (255 * (double)population / maxPopulation)), (byte)(255 - 255 * 10000 * (double)population / maxPopulation), (byte)(255 - 255 * 10000 * (double)population / maxPopulation), (byte)(255 - 255 * 10000 * (double)population / maxPopulation));
+                    if ((double)population / maxPopulation <= 1 / 10000) 
+                    {
+                        color = Color.FromArgb(0, 0, 0, 0);
+                    }
                     GeometryDrawing gd = new()
                     {
                         Geometry = new RectangleGeometry(new Rect() { X = x, Y = y, Width = demoUnitWidth, Height = demoUnitHeight }),
@@ -134,7 +138,7 @@ namespace CityPlanner
                     {
 
                         float normalizedDistance = stat / maxOkDistance;
-                        color = Color.FromArgb((byte)(35 + ((1 - normalizedDistance) * 220)), 0, 255, 0);
+                        color = Color.FromArgb((byte)(35 + ((1 - normalizedDistance) * 220)), 63, 0, 255);
 
                     }
 
