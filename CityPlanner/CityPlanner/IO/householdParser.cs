@@ -41,13 +41,13 @@ namespace CityPlanner.IO
                 sr.Close();
             }
 
-            map.Max_X = maxX; 
+            map.Max_X = maxX;
             map.Max_Y = maxY;
             map.Min_X = minX;
             map.Min_Y = minY;
 
-            map.Unit_X = (maxX - minX) / map.Width;
-            map.Unit_Y = (maxY - minY) / map.Height;
+            map.Unit_X = (map.Max_X - map.Min_X) / map.Width;
+            map.Unit_Y = (map.Max_Y - map.Min_Y) / map.Height;
 
             using (StreamReader sr = new StreamReader(file))
             {
@@ -58,10 +58,13 @@ namespace CityPlanner.IO
                 {
                     line = currentLine.Split(CultureInfo.CurrentCulture.TextInfo.ListSeparator);
 
-                    double x = (double.Parse(line[3], CultureInfo.InvariantCulture) - minX)/map.Unit_X - 1;
-                    double y = (double.Parse(line[4], CultureInfo.InvariantCulture) - minY) / map.Unit_Y - 1;
+                    double x = (double.Parse(line[3], CultureInfo.InvariantCulture) - map.Min_X) / map.Unit_X - 1;
+                    double y = map.Height - (double.Parse(line[4], CultureInfo.InvariantCulture) - map.Min_Y) / map.Unit_Y -1;
 
                     map.Matrix[Math.Max(0, Convert.ToInt32(x)), Math.Max(0, Convert.ToInt32(y))].Population += (int)Convert.ToDouble(line[12], CultureInfo.InvariantCulture);
+
+
+
                 }
 
                 sr.Close();
