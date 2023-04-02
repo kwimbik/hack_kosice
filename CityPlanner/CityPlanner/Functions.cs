@@ -1,6 +1,7 @@
 ﻿using CityPlanner.Models;
 using System;
 using System.Collections.Generic;
+using System.Data;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -19,6 +20,29 @@ namespace CityPlanner
         public static float dist(ILocation p1, ILocation p2)
         {
             return Math.Abs(p1.X - p2.X) + Math.Abs(p1.Y - p2.Y);
+        }
+
+        public static (int,int) getPeopleStats(Map map, List<ServiceLocation> location)
+        {
+            int peopleOutOfReach = 0;
+            int peopleInReach = 0;
+            for (int i = 0; i < map.Width; i++)
+            {
+                for(int j = 0; j < map.Height; j++)
+                {
+                    float minDist = float.MaxValue;
+                    foreach(ServiceLocation l in location) 
+                    {
+                        minDist = Math.Min(minDist, dist(l, map.Matrix[i, j]));
+                    }
+                    if (minDist > 15)
+                    {
+                        peopleOutOfReach += map.Matrix[i, j].Population;
+                    }
+                    else peopleInReach += map.Matrix[i, j].Population;
+                }
+            }
+            return (peopleOutOfReach, peopleInReach);
         }
 
         public static float getLocationStatus(DemographicUnit o, List<ServiceLocation> services)

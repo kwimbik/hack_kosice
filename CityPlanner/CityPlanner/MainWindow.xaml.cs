@@ -191,6 +191,23 @@ namespace CityPlanner
         {
             DrawPopulationMap();
             DrawServicesMap(SelectedServiceLocations(), clearChildern: false);
+            Display_info();
+        }
+
+        private void Display_info()
+        {
+            string info = "";
+            List<string> selected = new List<string>();
+
+            foreach (ServiceDefinition service in Model.ServiceDefinitions.Where(s => s.Shown == true))
+            {
+                var locations = map.Services.Where(s => s.Definition.Type == service.Type).ToList();
+
+                var people = Functions.getPeopleStats(map, locations);
+                info += $"{service.Type}, #People of ouf 15 minute reach reach: {people.Item1}\n";
+                info += $"{service.Type}, #People within 15 minute reach reach: {people.Item2}\n";
+            }
+            MessageBox.Show(info);
         }
 
         private void LoadPopulation_Click(object sender, RoutedEventArgs e)
