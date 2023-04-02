@@ -31,7 +31,7 @@
                         <DataGrid x:Name="dgServices" />
                         <DataGrid x:Name="dgPeopleInfo"/>
                     </StackPanel>
-                    <Canvas x:Name="cMMap" Grid.Column="1" Grid.Row="1" Background="Gray"/>
+                    <Canvas x:Name="cMMap" Grid.Column="1" Grid.Row="1" Background="Gray" MouseDown="cMMap_MouseDown"/>
                 </Grid>
             </TabItem>
         </TabControl>
