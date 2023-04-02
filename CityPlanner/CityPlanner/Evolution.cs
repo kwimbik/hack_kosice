@@ -41,7 +41,7 @@ namespace CityPlanner
 
         private double Distance(Cords c1, Cords c2)
         {
-            return Math.Abs(c1.X - c2.X) + Math.Abs(c1.Y - c2.Y);
+            return (Math.Abs(c1.X - c2.X) + Math.Abs(c1.Y - c2.Y)) * _map.Matrix[(int)((c1.X)), (int)((c1.Y))].Population;
         }
 
         private double Fitness(Individual individual)

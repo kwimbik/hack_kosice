@@ -224,10 +224,15 @@ namespace CityPlanner
                         }));
                     }
                 };
-                evo.Run(map, 50, 2, 1000);
+                evo.Run(map, 50, 7, 1000);
             });
         }
 
         #endregion
+
+        //private void LoadPopulation_Click(object sender, RoutedEventArgs e)
+        //{
+           
+        //}
     }
 }
