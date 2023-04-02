@@ -132,7 +132,7 @@ namespace CityPlanner
                     {
 
                         float normalizedDistance = stat / maxOkDistance;
-                        Color color = Color.FromArgb(100, (byte)(normalizedDistance * 255), (byte)((1 - normalizedDistance) * 255), 0);
+                        Color color = Color.FromArgb((byte)((1 - normalizedDistance) * 255), 255, 255, 0);
 
                         GeometryDrawing gd = new()
                         {
@@ -242,6 +242,7 @@ namespace CityPlanner
                         Application.Current.Dispatcher.BeginInvoke(new Action(() =>
                         {
                             DrawPopulationMap();
+                            DrawServicesMap(SelectedServiceLocations(), clearChildern: false);
                             DrawServicesMap(best.Services.Select(s => new ServiceLocation() { X = (int)s.X, Y = (int)s.Y }).ToList(), clearChildern: false);
                         }));
                     }
