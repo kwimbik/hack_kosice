@@ -55,7 +55,7 @@ namespace CityPlanner
                 {
                     map.Matrix[x, y].X = x;
                     map.Matrix[x, y].Y = y;
-                    map.Matrix[x, y].Population = 1;
+                    map.Matrix[x, y].Population = 0;
                 }
             }
 
@@ -87,7 +87,7 @@ namespace CityPlanner
 
                     // Draw demographic unit
                     int population = map.Matrix[i, j].Population;
-                    Color color = Color.FromArgb(100, 0, (byte)(255 * 100* (double)population / maxPopulation), 0);
+                    Color color = Color.FromArgb(100, 0, (byte)(255 * (double)population / maxPopulation), 0);
                     GeometryDrawing gd = new()
                     {
                         Geometry = new RectangleGeometry(new Rect() { X = x, Y = y, Width = demoUnitWidth, Height = demoUnitHeight }),
@@ -132,7 +132,7 @@ namespace CityPlanner
                     {
 
                         float normalizedDistance = stat / maxOkDistance;
-                        Color color = Color.FromArgb(100, (byte)(normalizedDistance * 255), (byte)((1 - normalizedDistance) * 255), 0);
+                        Color color = Color.FromArgb((byte)((1 - normalizedDistance) * 255), 255, 255, 0);
 
                         GeometryDrawing gd = new()
                         {
@@ -242,6 +242,7 @@ namespace CityPlanner
                         Application.Current.Dispatcher.BeginInvoke(new Action(() =>
                         {
                             DrawPopulationMap();
+                            DrawServicesMap(SelectedServiceLocations(), clearChildern: false);
                             DrawServicesMap(best.Services.Select(s => new ServiceLocation() { X = (int)s.X, Y = (int)s.Y }).ToList(), clearChildern: false);
                         }));
                     }
