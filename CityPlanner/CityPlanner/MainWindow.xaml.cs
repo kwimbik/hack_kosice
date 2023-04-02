@@ -85,7 +85,7 @@ namespace CityPlanner
 
                     // Draw demographic unit
                     int population = map.Matrix[i, j].Population;
-                    Color color = Color.FromRgb(0, (byte)(255 * (double)population / maxPopulation), 0);
+                    Color color = Color.FromArgb(100, 0, (byte)(255 * (double)population / maxPopulation), 0);
                     GeometryDrawing gd = new()
                     {
                         Geometry = new RectangleGeometry(new Rect() { X = x, Y = y, Width = demoUnitWidth, Height = demoUnitHeight }),
@@ -130,7 +130,7 @@ namespace CityPlanner
                     {
 
                         float normalizedDistance = stat / maxOkDistance;
-                        Color color = Color.FromRgb((byte)(normalizedDistance * 255), (byte)((1 - normalizedDistance) * 255), 0);
+                        Color color = Color.FromArgb(100, (byte)(normalizedDistance * 255), (byte)((1 - normalizedDistance) * 255), 0);
 
                         GeometryDrawing gd = new()
                         {
@@ -182,7 +182,7 @@ namespace CityPlanner
             InitMap();
 
             var imageKosice = new BitmapImage(new Uri(@"..\..\..\..\..\images\kosice.png", UriKind.Relative));
-            //cMMap.Background = new ImageBrush(imageKosice);
+            cMMap.Background = new ImageBrush(imageKosice);
         }
 
         private void Refresh_Click(object sender, RoutedEventArgs e)
