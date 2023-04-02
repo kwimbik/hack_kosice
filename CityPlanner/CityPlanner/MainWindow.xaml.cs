@@ -206,6 +206,13 @@ namespace CityPlanner
             dgPeopleInfo.ItemsSource = Display_info();
         }
 
+        private void NewService_Click(object sender, RoutedEventArgs e)
+        {
+            NewServiceWindow nsw = new NewServiceWindow(map, this);
+            nsw.Show();
+            this.Refresh_Click(sender,e);
+        }
+
         private ObservableCollection<InfoView> Display_info()
         {
             ObservableCollection<InfoView>  info = new ObservableCollection<InfoView>();

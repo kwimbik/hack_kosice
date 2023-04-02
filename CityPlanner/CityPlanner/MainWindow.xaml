@@ -26,6 +26,7 @@
                         <Button Content="Load services" Click="LoadServices_Click"/>
                         <Button Content="Refresh map" Click="Refresh_Click"/>
                         <Button Content="Run evolution" Click="Evo_Click"/>
+                        <Button Content="New service" Click="NewService_Click"/>
                     </ToolBar>
                     <StackPanel Grid.Column="0" Grid.Row="1">
                         <DataGrid x:Name="dgServices" />
