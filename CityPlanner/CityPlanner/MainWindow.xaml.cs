@@ -128,19 +128,22 @@ namespace CityPlanner
                     // Draw demographic unit
                     float stat = stats[i, j];
 
+                    Color color = Color.FromArgb(0, 0, 0, 0);
+
                     if (stat <= maxOkDistance)
                     {
 
                         float normalizedDistance = stat / maxOkDistance;
-                        Color color = Color.FromArgb((byte)((1 - normalizedDistance) * 255), 255, 255, 0);
+                        color = Color.FromArgb((byte)(35 + ((1 - normalizedDistance) * 220)), 0, 255, 0);
 
-                        GeometryDrawing gd = new()
-                        {
-                            Geometry = new RectangleGeometry(new Rect() { X = x, Y = y, Width = demoUnitWidth, Height = demoUnitHeight }),
-                            Brush = new SolidColorBrush(color)
-                        };
-                        drawingGroup.Children.Add(gd);
                     }
+
+                    GeometryDrawing gd = new()
+                    {
+                        Geometry = new RectangleGeometry(new Rect() { X = x, Y = y, Width = demoUnitWidth, Height = demoUnitHeight }),
+                        Brush = new SolidColorBrush(color)
+                    };
+                    drawingGroup.Children.Add(gd);
                 }
             }
 
