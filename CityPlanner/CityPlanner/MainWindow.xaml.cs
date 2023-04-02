@@ -9,6 +9,7 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Controls;
+using System.Windows.Controls.Primitives;
 using System.Windows.Data;
 using System.Windows.Documents;
 using System.Windows.Input;
@@ -16,6 +17,7 @@ using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
+using static Google.Protobuf.Reflection.SourceCodeInfo.Types;
 
 namespace CityPlanner
 {
@@ -206,6 +208,7 @@ namespace CityPlanner
                 var people = Functions.getPeopleStats(map, locations);
                 info += $"{service.Type}, #People of ouf 15 minute reach reach: {people.Item1}\n";
                 info += $"{service.Type}, #People within 15 minute reach reach: {people.Item2}\n";
+
             }
             MessageBox.Show(info);
         }
@@ -247,8 +250,27 @@ namespace CityPlanner
                         }));
                     }
                 };
-                evo.Run(map, 50, 7, 1000);
+                evo.Run(map, 50, 10, 1000);
             });
+        }
+
+        private void oblast_Click(object sender, RoutedEventArgs e)
+        {
+            DemographicUnit du = new DemographicUnit(); //tohle zjistit z clicku
+            string distances = "";
+            List<string> selected = new List<string>(); 
+
+            foreach (ServiceDefinition service in Model.ServiceDefinitions.Where(s => s.Shown == true))
+            {
+                selected.Add(service.Type);
+            }
+
+            foreach (var type in selected)
+            {
+                List<ServiceLocation> locations = map.Services.Where(s => s.Definition.Type == type).ToList();
+                distances += $"type:{type}, distance:{Functions.getLocationStatus(du, locations)}\n";
+            }
+            MessageBox.Show(distances);
         }
 
 
