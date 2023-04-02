@@ -54,7 +54,7 @@ namespace CityPlanner
                     double minDist = double.MaxValue;
                     for (int i = 0; i < individual.Services.Length; i++)
                     {
-                        double dist = Distance(new Cords(x, y), individual.Services[i]);
+                        double dist = Distance(new Cords(x, y), individual.Services[i]) ;
                         if (dist < minDist) minDist = dist;
                     }
                     invFitness += minDist;

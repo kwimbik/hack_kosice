@@ -32,7 +32,7 @@ namespace CityPlanner
 
         #region Fields
 
-        private Map map = new() { Matrix = new DemographicUnit[150, 150] };
+        private Map map = new() { Matrix = new DemographicUnit[100, 100] };
 
         #endregion
 
@@ -219,11 +219,12 @@ namespace CityPlanner
 
                         Application.Current.Dispatcher.BeginInvoke(new Action(() =>
                         {
-                            DrawServicesMap(best.Services.Select(s => new ServiceLocation() { X = (int)s.X, Y = (int)s.Y }).ToList());
+                            DrawPopulationMap();
+                            DrawServicesMap(best.Services.Select(s => new ServiceLocation() { X = (int)s.X, Y = (int)s.Y }).ToList(), clearChildern: false);
                         }));
                     }
                 };
-                evo.Run(map, 50, 4, 100);
+                evo.Run(map, 50, 2, 1000);
             });
         }
 
