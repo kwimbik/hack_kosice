@@ -89,7 +89,7 @@ namespace CityPlanner
 
                     // Draw demographic unit
                     int population = map.Matrix[i, j].Population;
-                    Color color = Color.FromArgb((byte)(50 + (255 * (double)population / maxPopulation)), (byte)(255 - 255 * 10000 * (double)population / maxPopulation), (byte)(255 - 255 * 10000 * (double)population / maxPopulation), (byte)(255 - 255 * 10000 * (double)population / maxPopulation));
+                    Color color = Color.FromArgb((byte)(50 + (255 * (double)population / maxPopulation)), (byte)(255 - 255 * 10000 * (double)population / maxPopulation), 0, 0);
                     if ((double)population / maxPopulation <= 1 / 10000) 
                     {
                         color = Color.FromArgb(0, 0, 0, 0);
@@ -140,7 +140,7 @@ namespace CityPlanner
                     {
 
                         float normalizedDistance = stat / maxOkDistance;
-                        color = Color.FromArgb((byte)(35 + ((1 - normalizedDistance) * 220)), 63, 0, 255);
+                        color = Color.FromArgb((byte)(155 + (Math.Min(1,(1.3 - normalizedDistance)) * 100)), 0, 255, 0);
 
                     }
 
@@ -257,7 +257,7 @@ namespace CityPlanner
                         }));
                     }
                 };
-                evo.Run(map, 50, 10, 1000);
+                evo.Run(map, 50, 7, 1000);
             });
         }
 
