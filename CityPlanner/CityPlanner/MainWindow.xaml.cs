@@ -190,6 +190,7 @@ namespace CityPlanner
 
         private void Window_Loaded(object sender, RoutedEventArgs e)
         {
+            ResizeMode = ResizeMode.NoResize;
             dgServices.ItemsSource = Model.ServiceDefinitions;
 
             InitMap();
